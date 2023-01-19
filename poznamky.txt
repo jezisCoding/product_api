@@ -1,0 +1,18 @@
+         |||||||||||||||||||||||||||||
+TODO:
+Meta data meno modelu?
+to_repre:
+  print(instance) - co tam je
+meno modelu dat do modelu len nie ako field
+if ModelName in myModels
+checknut modely - uz vies viac o restrikciach a tak
+ked budu data zle v zmysle ze najprv sa nieoco s id bude odkazovat na nieco co tam este neni
+momentalny problem: ked to tam hodim vsetko naraz tak tomu budu chybat foreign keys pri checkovani
+
+otazky:
+co ma api vratit pri ciastocnom importe? ciastocne uspesnom?
+apina ma mat len tie endpointy hej? nebudem riesit 
+mozem spravit aj taky get ze to selectne kamosov cez foreign key
+mam nejak riesit deletovanie? su tam prelinkovane veci foreign klucmi. asi nie. ale pytam sa pre istotu
+ak narazim na objekt ktory uz mam(id a model su identicke) tak robim update vzdy(aj prepisujem uz ulozene hodnoty) alebo len v pripade ze dany stlpec v tabulke je prazdny(predosly zaznam neobsahoval tento stlpec)
+testy?
