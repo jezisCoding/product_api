@@ -1,10 +1,10 @@
 from rest_framework import serializers
 
-from .models import myModels
+from .models import my_models
 
 class AttributeNameSerializer(serializers.ModelSerializer):
     class Meta:
-        model = myModels["AttributeName"]
+        model = my_models["AttributeName"]
         fields = '__all__'
 
     def to_representation(self, instance):
@@ -22,7 +22,7 @@ class AttributeNameSerializer(serializers.ModelSerializer):
 
 class AttributeValueSerializer(serializers.ModelSerializer):
     class Meta:
-        model = myModels["AttributeValue"]
+        model = my_models["AttributeValue"]
         fields = '__all__'
 
     def to_representation(self, instance):
@@ -35,7 +35,7 @@ class AttributeValueSerializer(serializers.ModelSerializer):
 
 class AttributeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = myModels["Attribute"]
+        model = my_models["Attribute"]
         fields = '__all__'
 
     def to_representation(self, instance):
@@ -54,7 +54,7 @@ class AttributeSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
-        model = myModels["Product"]
+        model = my_models["Product"]
         fields = '__all__'
 
     def to_representation(self, instance):
@@ -72,21 +72,21 @@ class ProductSerializer(serializers.ModelSerializer):
 
 class ProductAttributesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = myModels["ProductAttributes"]
+        model = my_models["ProductAttributes"]
         fields = '__all__'
 
     def to_representation(self, instance):
         return {
                 "ProductAttributes": {
                     "id": instance.id,
-                    "attribute": instance.attribute,
+                    "attribute": instance.attribute_id,
                     "product": instance.product_id
                     }
                 }
 
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = myModels["Image"]
+        model = my_models["Image"]
         fields = '__all__'
 
     def to_representation(self, instance):
@@ -100,7 +100,7 @@ class ImageSerializer(serializers.ModelSerializer):
 
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = myModels["ProductImage"]
+        model = my_models["ProductImage"]
         fields = '__all__'
 
     def to_representation(self, instance):
@@ -115,7 +115,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
 class CatalogSerializer(serializers.ModelSerializer):
     class Meta:
-        model = myModels["Catalog"]
+        model = my_models["Catalog"]
         fields = '__all__'
 
     def to_representation(self, instance):
@@ -129,7 +129,7 @@ class CatalogSerializer(serializers.ModelSerializer):
                     }
                 }
 
-mySerializers = {
+my_serializers = {
         "AttributeName": AttributeNameSerializer,
         "AttributeValue": AttributeValueSerializer,
         "Attribute": AttributeSerializer,

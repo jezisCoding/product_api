@@ -6,7 +6,7 @@ class AttributeName(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)
     nazev = models.CharField(max_length=15)
     kod = models.CharField(max_length=15, default="", blank=True)
-    zobrazit = models.BooleanField(blank=True)
+    zobrazit = models.BooleanField(blank=True, null=True)
 
 class AttributeValue(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)
@@ -25,12 +25,12 @@ class Product(models.Model):
     description = models.CharField(max_length=255, blank=True)
     cena = models.DecimalField(decimal_places=2, max_digits=12)
     mena = models.CharField(max_length=3, blank=True)
-    published_on = models.DateTimeField(blank=True)
-    is_published = models.BooleanField(blank=True)
+    published_on = models.DateTimeField(blank=True, null=True)
+    is_published = models.BooleanField(blank=True, null=True)
 
 class ProductAttributes(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)
-    attribute = models.ForeignKey(Attribute, on_delete=models.SET_NULL, null=True)
+    attribute_id = models.ForeignKey(Attribute, on_delete=models.SET_NULL, null=True)
     product_id = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
 
 class Image(models.Model):
@@ -51,7 +51,7 @@ class Catalog(models.Model):
     products_ids = []
     attributes_ids = []
 
-myModels = {
+my_models = {
     "AttributeName": AttributeName,
     "AttributeValue": AttributeValue,
     "Attribute": Attribute,

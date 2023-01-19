@@ -1,5 +1,6 @@
 from django.urls import path, include
 from .views import (
+        DeleteView,
         ImportView,
         ModelNameListView,
         ModelNameIdView,
@@ -14,4 +15,7 @@ urlpatterns = [
 
         path('detail/<str:model_name>/<int:id>', ModelNameIdView.as_view()),
         path('detail/<str:model_name>/<int:id>/', ModelNameIdView.as_view()),
+
+        path('deletealldata', DeleteView.as_view()),
+        path('deletealldata/', DeleteView.as_view()),
         ]
