@@ -4,7 +4,7 @@ from django.db import models
 
 class AttributeName(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)
-    nazev = models.CharField(max_length=15)
+    nazev = models.CharField(max_length=15, default="", blank=True)
     kod = models.CharField(max_length=15, default="", blank=True)
     zobrazit = models.BooleanField(blank=True, null=True)
 
@@ -46,10 +46,11 @@ class ProductImage(models.Model):
 
 class Catalog(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)
-    nazev = models.CharField(max_length=63)
+    nazev = models.CharField(max_length=63, default="", blank=True)
     obrazek_id = models.ForeignKey(Image, on_delete=models.SET_NULL, null=True)
-    products_ids = []
-    attributes_ids = []
+    # These are the list fields
+    products_ids = models.ManyToManyField(Product)
+    attributes_ids = models.ManyToManyField(Attribute)
 
 my_models = {
     "AttributeName": AttributeName,

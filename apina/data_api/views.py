@@ -2,6 +2,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
+# testing import
+from operator import itemgetter
+
 from .models import my_models
 from .serializers import my_serializers
 
@@ -9,6 +12,9 @@ from .serializers import my_serializers
 
 class DeleteView(APIView):
     def delete(self, request, *args, **kwargs):
+        '''
+        Delete all rows in all model tables
+        '''
         response_data = []
         for m in my_models.keys():
             deleted = my_models[m].objects.all().delete()
@@ -25,45 +31,34 @@ class ImportView(APIView):
         for obj in request.data:
             model_name = list(obj.keys())[0]
             serializer = my_serializers[model_name](data=obj[model_name])
-            if serializer.is_valid():
-                serializer.save()
-            else:
-                print('ser error items')
-                print(serializer.errors.items())
-                # if id error
-                if 'id' in serializer.errors.keys():
-                    print('type:')
-                    print(type(serializer.errors['id'][0]))
-                    print('dir:')
-                    print(dir(serializer.errors['id'][0]))
-                    print('attempt:')
-                    err_code = serializer.errors['id'][0].code
-                    # if unique id error, its not an error.  we update
-                    if err_code == 'unique':
-                        #get item with given id
-                        print('ser data:')
-                        print(serializer.data['id'])
-                        model = my_models[model_name]
-                        item = model.objects.get(id=serializer.data['id'])
-                        print('item:')
-                        print(item)
-                        #add smth to it (attr=attr)
-                        print('ser data:')
-                        print(serializer.data)
-                        for key in serializer.data:
-                            if not hasattr(item, key):
-                                setattr(item, key, serializer.data[key])
-                                # thiss only adds attribute if it wasnt there
-                                # i think i just shouldnt hasattr otherwise
-                        print('save now for what')
-                        model.objects.save(item)
-                        #save it again
 
+            if not serializer.is_valid():
                 obj['errors'] = serializer.errors
                 response_data = { 'object': obj }
                 return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
 
-        # Respond with what was created
+            else:
+                model = my_models[model_name]
+                item = model.objects.filter(pk=serializer.validated_data['id'])
+                # a povieme vsetkym ze maju ignorovat unique id validator
+
+                # dostane sa sem kod vobec niekedy? nevyhodi to vyssie 
+                # uz exception KeyError? 
+                # mozno ho tam chytit radsi
+                if item:
+                    print('updating with object:')
+                    print(serializer.validated_data)
+                    # Update reportedly does not send signals to other apps
+                    # We only have one app so I am using it here
+                    item.update(**serializer.validated_data)
+                else:
+                    serializer.save()
+                    #return Response(
+                    #        data=("Model {} does not exist".format(model_name)),
+                    #        status=status.HTTP_400_BAD_REQUEST
+                    #        )
+                
+        # All sucessful. Respond with what was created
         return Response(request.data, status=status.HTTP_201_CREATED)
 
 class ModelNameListView(APIView):
@@ -73,31 +68,33 @@ class ModelNameListView(APIView):
         '''
         
         try:
-            data = my_models[model_name].objects
+            objs = my_models[model_name].objects
         except KeyError:
             return Response(
                     data=("Model {} does not exist".format(model_name)),
                     status=status.HTTP_400_BAD_REQUEST
                     )
 
-        serializer = my_serializers[model_name](data, many=True)
+        # we give this to serializer to push it through to_representation()
+        serializer = my_serializers[model_name](objs, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class ModelNameIdView(APIView):
     def get(self, request, model_name, id, *args, **kwargs):
         '''
-        Return a response with data by model_name and id
+        Return a response with object by model_name and id
         '''
         model = my_models[model_name]
-        data = None
 
         try:
-            data = model.objects.get(id=id)
+            obj = model.objects.get(id=id)
         except model.DoesNotExist:
             return Response(
                 {"res": "Object {model_name} with id {id} does not exist".format(
                     model_name=model_name, id=id)},
-                status=status.HTTP_400_BAD_REQUEST)
+                status=status.HTTP_400_BAD_REQUEST
+                )
 
-        serializer = my_serializers[model_name](data)
+        # we give this to serializer to push it through to_representation()
+        serializer = my_serializers[model_name](obj)
         return Response(serializer.data, status=status.HTTP_200_OK)

@@ -7,10 +7,12 @@ class AttributeNameSerializer(serializers.ModelSerializer):
         model = my_models["AttributeName"]
         fields = '__all__'
 
+    # Override id field and initialize it without it's default validator.
+    # We do this because otherwise serializer does not validate 2nd occurence 
+    # of a specific id. In all models.
+    id = serializers.IntegerField(validators=[])
+
     def to_representation(self, instance):
-        print("instance:")
-        print(type(instance))
-        print(dir(instance))
         return {
                 "AttributeName": {
                     "id": instance.id,
@@ -25,6 +27,8 @@ class AttributeValueSerializer(serializers.ModelSerializer):
         model = my_models["AttributeValue"]
         fields = '__all__'
 
+    id = serializers.IntegerField(validators=[])
+
     def to_representation(self, instance):
         return {
                 "AttributeValue": {
@@ -37,6 +41,8 @@ class AttributeSerializer(serializers.ModelSerializer):
     class Meta:
         model = my_models["Attribute"]
         fields = '__all__'
+
+    id = serializers.IntegerField(validators=[])
 
     def to_representation(self, instance):
         print("instance:")
@@ -57,6 +63,8 @@ class ProductSerializer(serializers.ModelSerializer):
         model = my_models["Product"]
         fields = '__all__'
 
+    id = serializers.IntegerField(validators=[])
+
     def to_representation(self, instance):
         return {
                 "Product": {
@@ -75,6 +83,8 @@ class ProductAttributesSerializer(serializers.ModelSerializer):
         model = my_models["ProductAttributes"]
         fields = '__all__'
 
+    id = serializers.IntegerField(validators=[])
+
     def to_representation(self, instance):
         return {
                 "ProductAttributes": {
@@ -88,6 +98,8 @@ class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = my_models["Image"]
         fields = '__all__'
+
+    id = serializers.IntegerField(validators=[])
 
     def to_representation(self, instance):
         return {
@@ -103,12 +115,14 @@ class ProductImageSerializer(serializers.ModelSerializer):
         model = my_models["ProductImage"]
         fields = '__all__'
 
+    id = serializers.IntegerField(validators=[])
+
     def to_representation(self, instance):
         return {
                 "ProductImage": {
                     "id": instance.id,
                     "product": instance.product,
-                    "obrazekid": instance.obrazekid,
+                    "obrazek_id": instance.obrazek_id,
                     "nazev": instance.nazev
                     }
                 }
@@ -118,16 +132,19 @@ class CatalogSerializer(serializers.ModelSerializer):
         model = my_models["Catalog"]
         fields = '__all__'
 
-    def to_representation(self, instance):
-        return {
-                "Catalog": {
-                    "id": instance.id,
-                    "nazev": instance.nazev,
-                    "obrazekid": instance.obrazekid,
-                    "productids": instance.productids,
-                    "attributesids": instance.zevattributesids
-                    }
-                }
+    id = serializers.IntegerField(validators=[])
+
+    #def to_representation(self, instance):
+    #    return {
+    #            "Catalog": {
+    #                "id": instance.id,
+    #                "nazev": instance.nazev,
+    #                "obrazek_id": instance.obrazek_id_id,
+    #                #_id
+    #                "products_ids": instance.products_ids,
+    #                "attributes_ids": instance.attributes_ids
+    #                }
+    #            }
 
 my_serializers = {
         "AttributeName": AttributeNameSerializer,
