@@ -1,0 +1,52 @@
+Table AttributeName {
+  id int [pk]
+  nazev varchar
+  kod varchar
+  zobrazit varchar
+}
+
+Table AttributeValue {
+  id int [pk]
+  hodnota varchar
+}
+
+Table Attribute {
+  id int [pk]
+  nazev_atributu_id int [ref: > AttributeName.id]
+  hodnota_atributu_id int [ref: > AttributeValue.id]
+}
+
+Table Product {
+  id int [pk]
+  nazev varchar
+  description varchar
+  cena decimal
+  mena varchar
+}
+
+Table ProductAttributes {
+  id int [pk]
+  attribute_id int [ref: > Attribute.id]
+  product_id int [ref: > Product.id]
+}
+
+Table Image {
+  id int [pk]
+  nazev varchar
+  obrazek varchar
+}
+
+Table ProductImage {
+  id int [pk]
+  product_id int [ref: > Product.id]
+  obrazek_id int [ref: > Image.id]
+  nazev varchar
+}
+
+Table Catalog {
+  id int [pk]
+  nazev varchar
+  obrazek_id foreign
+  products_ids int [ref: <> Product.id]
+  attributes_ids int [ref: <> Attribute.id]
+}
