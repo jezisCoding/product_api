@@ -12,6 +12,8 @@ class AttributeNameSerializer(serializers.ModelSerializer):
     # of a specific id. In all models.
     id = serializers.IntegerField(validators=[])
 
+    # maybe just
+    # "AttributeName": instance
     def to_representation(self, instance):
         return {
                 "AttributeName": {
@@ -133,18 +135,31 @@ class CatalogSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     id = serializers.IntegerField(validators=[])
+    #products_ids = serializers.SerializerMethodField()
+    #attributes_ids = serializers.SerializerMethodField()
 
-    #def to_representation(self, instance):
-    #    return {
-    #            "Catalog": {
-    #                "id": instance.id,
-    #                "nazev": instance.nazev,
-    #                "obrazek_id": instance.obrazek_id_id,
-    #                #_id
-    #                "products_ids": instance.products_ids,
-    #                "attributes_ids": instance.attributes_ids
-    #                }
-    #            }
+    #def get_products_ids(self, catalog):
+     #   return ProductSerializer(catalog.products_ids(), many=True).data
+
+    #def get_attributes_ids(self, catalog):
+     #   return AttributeSerializer(catalog.attributes_ids(), many=True).data
+
+    def to_representation(self, instance):
+        p_ids = []
+        a_ids = []
+        for p_id in instance.products_ids.all():
+            p_ids.append(p_id.id)
+        for a_id in instance.attributes_ids.all():
+            a_ids.append(a_id.id)
+        return {
+                "Catalog": {
+                    "id": instance.id,
+                    "nazev": instance.nazev,
+                    "obrazek_id": instance.obrazek_id_id,
+                    "products_ids": p_ids,
+                    "attributes_ids": a_ids
+                    }
+                }
 
 my_serializers = {
         "AttributeName": AttributeNameSerializer,
