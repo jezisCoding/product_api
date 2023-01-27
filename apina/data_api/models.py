@@ -49,8 +49,8 @@ class Catalog(models.Model):
     nazev = models.CharField(max_length=63, default="", blank=True)
     obrazek_id = models.ForeignKey(Image, on_delete=models.SET_NULL, null=True)
     # These are the list fields
-    products_ids = models.ManyToManyField(Product)
-    attributes_ids = models.ManyToManyField(Attribute)
+    products_ids = models.ManyToManyField(Product, blank=True)
+    attributes_ids = models.ManyToManyField(Attribute, blank=True)
 
 my_models = {
     "AttributeName": AttributeName,

@@ -123,7 +123,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
         return {
                 "ProductImage": {
                     "id": instance.id,
-                    "product": instance.product,
+                    "product": instance.product_id,
                     "obrazek_id": instance.obrazek_id,
                     "nazev": instance.nazev
                     }
@@ -144,6 +144,31 @@ class CatalogSerializer(serializers.ModelSerializer):
     #def get_attributes_ids(self, catalog):
      #   return AttributeSerializer(catalog.attributes_ids(), many=True).data
 
+    def update(self, item, validated_data):
+        """
+        Update products_ids and attributes_ids manually.
+        Delete the 2 fields from the item so they dont interfere anywhere
+        (probably unnecessary).
+        """
+        if 'nazev' in validated_data.keys():
+            item.nazev = validated_data['nazev']
+        if 'obrazek_id' in validated_data.keys():
+            item.obrazek_id = validated_data['obrazek_id']
+
+        if 'products_ids' in validated_data.keys():
+            item.products_ids.clear()
+            item.products_ids.set(validated_data['products_ids'])
+            # delete it so it doesn't interfere with anything 
+            del validated_data['products_ids']
+
+        if 'attributes_ids' in validated_data.keys():
+            item.attributes_ids.clear()
+            item.attributes_ids.set(validated_data['products_ids'])
+            # delete it so it doesn't interfere with anything
+            del validated_data['attributes_ids']
+        
+        return item
+
     def to_representation(self, instance):
         p_ids = []
         a_ids = []
@@ -151,6 +176,7 @@ class CatalogSerializer(serializers.ModelSerializer):
             p_ids.append(p_id.id)
         for a_id in instance.attributes_ids.all():
             a_ids.append(a_id.id)
+
         return {
                 "Catalog": {
                     "id": instance.id,
