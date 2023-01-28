@@ -15,6 +15,7 @@ class AttributeNameSerializer(serializers.ModelSerializer):
     # maybe just
     # "AttributeName": instance
     def to_representation(self, instance):
+        #print('instance', instance)
         return {
                 "AttributeName": {
                     "id": instance.id,
