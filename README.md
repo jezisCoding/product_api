@@ -1,9 +1,10 @@
 ## About
-Simple Django read/write e-shop REST API.\
-Made as an assignment for an job interview.\
-Data, some names and code is in Czech.
+Simple Django read/write only e-shop REST API.\
+Made as an assignment for a job interview.\
+Some names and code is in Czech.
 
-I included the assignment itself. A database diagram and test data are also here.
+I included the assignment itself.\
+A database diagram and test data are also here.
 
 ## Started with this tutorial:
 https://blog.logrocket.com/django-rest-framework-create-api/#setting-up-django-rest-framework
