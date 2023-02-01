@@ -1,20 +1,17 @@
-# H2 About:
-Django REST API assignment for an interview.
-Strings and names are often in Czech.
-
+## About
+Simple Django read/write e-shop REST API.
+Made as an assignment for an job interview.
+Data, some names and code is in Czech.
 
 
 Also database diagram, test data here.
 
 
-
-# H2 Started with this tutorial:
+## Started with this tutorial:
 https://blog.logrocket.com/django-rest-framework-create-api/#setting-up-django-rest-framework
 
 
-
-# H2 How to Install:
-
+## How to Install
 First make sure you have latest Python 3, venv and pip.
 Installation depends on your system. If you have Python3, 
 In `product_api` folder run:
@@ -26,8 +23,7 @@ pip install --upgrade pip
 pip install -r requirements.txt
 `
 
-# H2 How to Run:
-
+## How to Run
 `
 cd apina
 python manage.py runserver
