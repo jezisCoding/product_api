@@ -12,11 +12,11 @@ https://blog.logrocket.com/django-rest-framework-create-api/#setting-up-django-r
 First make sure you have latest Python 3, venv and pip.\
 Installation depends on your system. If you have Python3\
 In `product_api` folder run:\
-`python3 -m venv venv`
-`. venv/bin/activate`
-`pip install --upgrade pip`
+`python3 -m venv venv`\
+`. venv/bin/activate`\
+`pip install --upgrade pip`\
 `pip install -r requirements.txt`
 
 ## How to Run
-`cd apina`
+`cd apina`\
 `python manage.py runserver`
