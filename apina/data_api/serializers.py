@@ -7,15 +7,12 @@ class AttributeNameSerializer(serializers.ModelSerializer):
         model = my_models["AttributeName"]
         fields = '__all__'
 
-    # Override id field and initialize it without it's default validator.
+    # Override id field and initialize it without it's default validator (unique).
     # We do this because otherwise serializer does not validate 2nd occurence 
     # of a specific id. In all models.
-    id = serializers.IntegerField(validators=[])
+    #id = serializers.IntegerField(validators=[])
 
-    # maybe just
-    # "AttributeName": instance
     def to_representation(self, instance):
-        #print('instance', instance)
         return {
                 "AttributeName": {
                     "id": instance.id,
@@ -30,7 +27,7 @@ class AttributeValueSerializer(serializers.ModelSerializer):
         model = my_models["AttributeValue"]
         fields = '__all__'
 
-    id = serializers.IntegerField(validators=[])
+    #id = serializers.IntegerField(validators=[])
 
     def to_representation(self, instance):
         return {
@@ -45,14 +42,9 @@ class AttributeSerializer(serializers.ModelSerializer):
         model = my_models["Attribute"]
         fields = '__all__'
 
-    id = serializers.IntegerField(validators=[])
+    #id = serializers.IntegerField(validators=[])
 
     def to_representation(self, instance):
-        print("instance:")
-        print(type(instance))
-        print(instance)
-        print(dir(instance))
-        print(instance.serializable_value)
         return {
                 "Attribute": {
                     "id": instance.id,
@@ -66,7 +58,7 @@ class ProductSerializer(serializers.ModelSerializer):
         model = my_models["Product"]
         fields = '__all__'
 
-    id = serializers.IntegerField(validators=[])
+    #id = serializers.IntegerField(validators=[])
 
     def to_representation(self, instance):
         return {
@@ -86,7 +78,7 @@ class ProductAttributesSerializer(serializers.ModelSerializer):
         model = my_models["ProductAttributes"]
         fields = '__all__'
 
-    id = serializers.IntegerField(validators=[])
+    #id = serializers.IntegerField(validators=[])
 
     def to_representation(self, instance):
         return {
@@ -102,7 +94,7 @@ class ImageSerializer(serializers.ModelSerializer):
         model = my_models["Image"]
         fields = '__all__'
 
-    id = serializers.IntegerField(validators=[])
+    #id = serializers.IntegerField(validators=[])
 
     def to_representation(self, instance):
         return {
@@ -118,7 +110,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
         model = my_models["ProductImage"]
         fields = '__all__'
 
-    id = serializers.IntegerField(validators=[])
+    #id = serializers.IntegerField(validators=[])
 
     def to_representation(self, instance):
         return {
@@ -135,21 +127,12 @@ class CatalogSerializer(serializers.ModelSerializer):
         model = my_models["Catalog"]
         fields = '__all__'
 
-    id = serializers.IntegerField(validators=[])
-    #products_ids = serializers.SerializerMethodField()
-    #attributes_ids = serializers.SerializerMethodField()
-
-    #def get_products_ids(self, catalog):
-     #   return ProductSerializer(catalog.products_ids(), many=True).data
-
-    #def get_attributes_ids(self, catalog):
-     #   return AttributeSerializer(catalog.attributes_ids(), many=True).data
+    #id = serializers.IntegerField(validators=[])
 
     def update(self, item, validated_data):
         """
         Update products_ids and attributes_ids manually.
-        Delete the 2 fields from the item so they dont interfere anywhere
-        (probably unnecessary).
+        Delete the 2 fields from the item so they dont interfere anywhere.
         """
         if 'nazev' in validated_data.keys():
             item.nazev = validated_data['nazev']
@@ -159,13 +142,11 @@ class CatalogSerializer(serializers.ModelSerializer):
         if 'products_ids' in validated_data.keys():
             item.products_ids.clear()
             item.products_ids.set(validated_data['products_ids'])
-            # delete it so it doesn't interfere with anything 
             del validated_data['products_ids']
 
         if 'attributes_ids' in validated_data.keys():
             item.attributes_ids.clear()
             item.attributes_ids.set(validated_data['products_ids'])
-            # delete it so it doesn't interfere with anything
             del validated_data['attributes_ids']
         
         return item

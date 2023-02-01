@@ -15,4 +15,6 @@ Pozri si github! Na rest apiny django, serializery! profit!
 
 
 Znamy bug:
-
+/detail/ProductImage: Image is not JSON serializable
+/detail/ProductAttributes: Foreign keys are empty
+/import: ten import bezi poho np aj ked som ten id field override vymazal vsade?
