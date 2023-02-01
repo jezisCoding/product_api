@@ -1,12 +1,11 @@
          |||||||||||||||||||||||||||||
 OTAZKY:
 Co ma api vratit pri ciastocnom importe? ciastocne uspesnom?
-Apina ma mat len tie endpointy hej? nebudem riesit 
 Mozem spravit aj taky get ze to selectne kamosov cez foreign key
 Mam nejak riesit deletovanie? su tam prelinkovane veci foreign klucmi. asi nie. ale pytam sa pre istotu
+How to make sure my database has no dead rows
 Ak narazim na objekt ktory uz mam(id a model su identicke) tak robim update vzdy(aj prepisujem uz ulozene hodnoty) alebo len v pripade ze dany stlpec v tabulke je prazdny(predosly zaznam neobsahoval tento stlpec)
 Testy?
-How to make sure my database has no dead rows
 Ako sa ma spravat update? v datach vsetky pripady (v objekte sa ukazu len 2 atributy, atributu sa zmeni hodnota, v atribute ktory je zoznam sa zmenia hodnoty (je tam o jednu menej))
 Ked budu data zle v zmysle ze najprv sa nieoco s id bude odkazovat na nieco co tam este neni
 
