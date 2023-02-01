@@ -12,4 +12,4 @@ Ked budu data zle v zmysle ze najprv sa nieoco s id bude odkazovat na nieco co t
 
 TODO:
 Testing? Code without tests is broken as designed.
-
+Pozri si github! Na rest apiny django, serializery! profit!
