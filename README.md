@@ -23,3 +23,6 @@ Then, in `product_api` folder run:\
 
 ## How to Run
 `python manage.py runserver`
+
+## Known bugs and my notes
+Listed in `notes.txt`

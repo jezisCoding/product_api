@@ -1,20 +1,21 @@
-         |||||||||||||||||||||||||||||
-OTAZKY:
+My commentary:
+Mal som nejake otazky (snazil som sa to brat ako zadanie v praci, kde by som komunikoval o tom ako chapat data, ako sa to ma spravat, atd.(tie otazky tu mam napisane)), ale aj tak som to nestihol spravit nacas a bez bugov. Budem rad ak si to pozriete a rozhodne budem zvedavy na nejaky feedback ak mate.
+
+QUESTIONS:
+What should api return on partially successful import?
 Co ma api vratit pri ciastocnom importe? ciastocne uspesnom?
+Do i want a get that returns its friends via foreign key?
 Mozem spravit aj taky get ze to selectne kamosov cez foreign key
-Mam nejak riesit deletovanie? su tam prelinkovane veci foreign klucmi. asi nie. ale pytam sa pre istotu
-How to make sure my database has no dead rows
+Should i deal with deleting? Cascade?
+How to make sure my database has no dead rows?
 Ak narazim na objekt ktory uz mam(id a model su identicke) tak robim update vzdy(aj prepisujem uz ulozene hodnoty) alebo len v pripade ze dany stlpec v tabulke je prazdny(predosly zaznam neobsahoval tento stlpec)
 Testy?
 Ako sa ma spravat update? v datach vsetky pripady (v objekte sa ukazu len 2 atributy, atributu sa zmeni hodnota, v atribute ktory je zoznam sa zmenia hodnoty (je tam o jednu menej))
 Ked budu data zle v zmysle ze najprv sa nieoco s id bude odkazovat na nieco co tam este neni
 
-TODO:
-Testing? Code without tests is broken as designed.
-Pozri si github! Na rest apiny django, serializery! profit!
-
-
-Znamy bug:
+Known bugs:
 /detail/ProductImage: Image is not JSON serializable
 /detail/ProductAttributes: Foreign keys are empty
+/detail/: inak vyzeraju dobre
 /import: ten import bezi poho np aj ked som ten id field override vymazal vsade?
+	 aj odmazat by sa to dalo (je to zakomentovane)
