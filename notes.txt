@@ -1,16 +1,18 @@
 My commentary:
 Mal som nejake otazky (snazil som sa to brat ako zadanie v praci, kde by som komunikoval o tom ako chapat data, ako sa to ma spravat, atd.(tie otazky tu mam napisane)), ale aj tak som to nestihol spravit nacas a bez bugov. Budem rad ak si to pozriete a rozhodne budem zvedavy na nejaky feedback ak mate.
 
-Questions:
+Questions and notes:
 Should i deal with deleting? Cascade? (I don't have an endpoint for deleteing)
 How to make sure my database has no dead rows?
 On /import/: If i encounter an object i already have(id and model are identical) then I always do update(i overwrite values under keys by new values), or do i only write values in case the column in database is still empty?
 Can data be wrong in a way that an object refers by a foreign key to an object which is not yet in the database (meaning it came earlier on input)? And if yes, can it be wrong in many other ways too?
 What should api return on partially successful import?
 Do i want a get that returns its friends via foreign key?
-Does anyone want tests?
+I could also not keep django generated files in my source
+Tests
 
 Known bugs:
+mam tam picomodel v db a migraciach~~
 /detail/ProductImage: Image is not JSON serializable
 /detail/ProductAttributes: Foreign keys are empty
 /detail/: inak vyzeraju dobre
