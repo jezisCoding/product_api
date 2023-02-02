@@ -10,15 +10,14 @@ A database diagram and test data are also here.
 https://blog.logrocket.com/django-rest-framework-create-api/#setting-up-django-rest-framework
 
 ## How to Install
-First make sure you have latest Python 3 and venv.\
-Installation depends on your system. 
+First make sure you have latest Python 3 and venv.
+Installation depends on your system.\
 Then, in `product_api` folder run:\
 `python3 -m venv venv`\
 `. venv/bin/activate`\
 `pip install --upgrade pip`\
 `pip install -r requirements.txt`\
 `cd apina`\
-`python manage.py makemigrations`\
 `python manage.py migrate`
 
 ## How to Run

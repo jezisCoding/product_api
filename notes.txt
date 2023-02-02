@@ -1,11 +1,3 @@
-My commentary:
-Mal som nejake otazky (snazil som sa to brat ako zadanie v praci, kde by som komunikoval o tom ako chapat data, ako sa to ma spravat, atd.(tie otazky tu mam napisane)), ale aj tak som to nestihol spravit nacas a bez bugov. Budem rad ak si to pozriete a rozhodne budem zvedavy na nejaky feedback ak mate.
-
-menej penazi
-pozrite si moje notes
-upravit ich
-picomodel musi von
-
 Questions:
 Should i deal with deleting? Cascade? (I don't have an endpoint for deleteing)
 On /import/: If i encounter an object i already have(id and model are identical) then I always do update(i overwrite values under keys by new values), or do i only write values in case the column in database is still empty?
@@ -19,9 +11,8 @@ I could also not keep django generated files in my source
 Tests
 
 Known bugs:
-mam tam picomodel v db a migraciach~~
 /detail/ProductImage: Image is not JSON serializable
 /detail/ProductAttributes: Foreign keys are empty
-/detail/: inak vyzeraju dobre
+/detail/: inak by to malo byt dobre (testy nemam)
 /import: ten import bezi poho np aj ked som ten id field override vymazal vsade?
 	 aj odmazat by sa to dalo (je to zakomentovane)
