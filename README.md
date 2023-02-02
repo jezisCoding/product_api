@@ -16,9 +16,9 @@ Then, in `product_api` folder run:\
 `python3 -m venv venv`\
 `. venv/bin/activate`\
 `pip install --upgrade pip`\
-`pip install -r requirements.txt`
+`pip install -r requirements.txt`\
 `cd apina`\
-`python manage.py makemigrations`
+`python manage.py makemigrations`\
 `python manage.py migrate`
 
 ## How to Run
