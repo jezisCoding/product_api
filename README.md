@@ -25,3 +25,6 @@ Then, in `product_api` folder run:\
 
 ## Known bugs and my notes
 Listed in `notes.txt`
+
+## Test data
+Is in project root, named `test-data.json`
