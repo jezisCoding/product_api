@@ -3,7 +3,6 @@ Simple Django read/write only e-shop REST API.\
 Made as an assignment for a job interview.\
 Some names and code is in Czech.
 
-I included the assignment itself.\
 A database diagram and test data are also here.
 
 ## Started with this tutorial:
