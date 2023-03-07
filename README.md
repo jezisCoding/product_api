@@ -11,7 +11,7 @@ https://blog.logrocket.com/django-rest-framework-create-api/#setting-up-django-r
 ## How to Install
 First make sure you have latest Python 3 and venv.
 Installation depends on your system.\
-Then, in `product_api` folder run:\
+Then, in `product_catalog_api` folder run:\
 `python3 -m venv venv`\
 `. venv/bin/activate`\
 `pip install --upgrade pip`\

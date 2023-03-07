@@ -39,10 +39,10 @@ class ImportView(APIView):
 
             try:
                 item = model.objects.get(pk=obj[model_name]['id'])
-                # if we give item (instance) then save() does update()
+                # if we give item (instance) param then save() does update()
                 serializer = my_serializers[model_name](item, data=obj[model_name])
             except model.DoesNotExist:
-                # else does create()
+                # else save() does create()
                 serializer = my_serializers[model_name](data=obj[model_name])
 
             if not serializer.is_valid():
@@ -53,7 +53,7 @@ class ImportView(APIView):
             else:
                 serializer.save()
                 
-        # All sucessful. Respond with what was created
+        # All successful. Respond with what was created
         return Response(request.data, status=status.HTTP_201_CREATED)
 
 class ModelNameListView(APIView):
@@ -87,11 +87,9 @@ class ModelNameIdView(APIView):
             - 200 = Success
             - 400 = Id does not exist
         """
-        model = my_models[model_name]
-
         try:
-            obj = model.objects.get(id=id)
-        except model.DoesNotExist:
+            model = my_models[model_name]
+        except KeyError:
             return Response(
                 {"res": "Object {model_name} with id {id} does not exist".format(
                     model_name=model_name, id=id)},
