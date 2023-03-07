@@ -22,6 +22,7 @@ class AttributeNameSerializer(serializers.ModelSerializer):
                     }
                 }
 
+
 class AttributeValueSerializer(serializers.ModelSerializer):
     class Meta:
         model = my_models["AttributeValue"]
@@ -36,6 +37,7 @@ class AttributeValueSerializer(serializers.ModelSerializer):
                     "hodnota": instance.hodnota
                     }
                 }
+
 
 class AttributeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -52,6 +54,7 @@ class AttributeSerializer(serializers.ModelSerializer):
                     "hodnota_atributu_id": instance.hodnota_atributu_id_id
                     }
                 }
+
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
@@ -73,6 +76,7 @@ class ProductSerializer(serializers.ModelSerializer):
                     }
                 }
 
+
 class ProductAttributesSerializer(serializers.ModelSerializer):
     class Meta:
         model = my_models["ProductAttributes"]
@@ -88,6 +92,7 @@ class ProductAttributesSerializer(serializers.ModelSerializer):
                     "product": instance.product_id
                     }
                 }
+
 
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -105,6 +110,7 @@ class ImageSerializer(serializers.ModelSerializer):
                     }
                 }
 
+
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = my_models["ProductImage"]
@@ -121,6 +127,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
                     "nazev": instance.nazev
                     }
                 }
+
 
 class CatalogSerializer(serializers.ModelSerializer):
     class Meta:
@@ -168,6 +175,7 @@ class CatalogSerializer(serializers.ModelSerializer):
                     "attributes_ids": a_ids
                     }
                 }
+
 
 my_serializers = {
         "AttributeName": AttributeNameSerializer,

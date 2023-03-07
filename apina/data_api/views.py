@@ -20,6 +20,7 @@ class DeleteView(APIView):
             print("deleted {}".format(deleted))
         return Response(response_data, status=status.HTTP_202_ACCEPTED)
 
+
 class ImportView(APIView):
     def post(self, request, *args, **kwargs):
         """
@@ -56,6 +57,7 @@ class ImportView(APIView):
         # All successful. Respond with what was created
         return Response(request.data, status=status.HTTP_201_CREATED)
 
+
 class ModelNameListView(APIView):
     def get(self, request, model_name, *args, **kwargs):
         """
@@ -77,6 +79,7 @@ class ModelNameListView(APIView):
         # we give this to serializer to push it through to_representation()
         serializer = my_serializers[model_name](objs, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class ModelNameIdView(APIView):
     def get(self, request, model_name, id, *args, **kwargs):
