@@ -91,6 +91,14 @@ class ModelNameIdView(APIView):
             model = my_models[model_name]
         except KeyError:
             return Response(
+                    data=("Model {} does not exist".format(model_name)),
+                    status=status.HTTP_400_BAD_REQUEST
+                    )
+
+        try:
+            obj = model.objects.get(id=id)
+        except model.DoesNotExist:
+            return Response(
                 {"res": "Object {model_name} with id {id} does not exist".format(
                     model_name=model_name, id=id)},
                 status=status.HTTP_400_BAD_REQUEST

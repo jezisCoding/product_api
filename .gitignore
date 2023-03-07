@@ -15,6 +15,9 @@ db.sqlite3-journal
 # Swap files
 *.swp
 
+# I dont want migrations
+apina/data_api/migrations
+
 # Others
 .vscode/
 test-zadani.txt
