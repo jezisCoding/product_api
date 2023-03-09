@@ -39,9 +39,6 @@ class ImportView(APIView):
             for obj in request.data:
                 r = self.save_object(obj)
                 if r: return r
-                                
-        # All successful. Respond with what was created
-        return Response(request.data, status=status.HTTP_201_CREATED)
 
     def save_object(self, obj):
         """
@@ -51,15 +48,13 @@ class ImportView(APIView):
 
         TODO hopefully working correctly. I havent tested all outputs.
         """
-        print('halo')
         model_name = list(obj.keys())[0]
 
         try:
             model = my_models[model_name]
-            print('halo')
         except KeyError:
             return Response(
-                    data=("Model {} does not exist in database".format(model_name)),
+                    "Model {} does not exist in database".format(model_name),
                     status=status.HTTP_400_BAD_REQUEST
                     )
 
@@ -67,11 +62,9 @@ class ImportView(APIView):
             item = model.objects.get(pk=obj[model_name]['id'])
             # if we give item (instance) param then save() does update()
             serializer = my_serializers[model_name](item, data=obj[model_name])
-            created_only = False
         except model.DoesNotExist:
             # else save() does create()
             serializer = my_serializers[model_name](data=obj[model_name])
-            created = True
 
         if not serializer.is_valid():
             obj['errors'] = serializer.errors
@@ -80,6 +73,13 @@ class ImportView(APIView):
 
         else:
             serializer.save()
+
+        if updated: return Response(response_data, status=status.HTTP_200)
+        if created: return Response(response_data, status=status.HTTP_201_CREATED)
+        return Response(request.data, status=status.)
+
+        # WIP neni to to vubec doriesene, treba to zjednotit asi, nemozem len tak hadzat kody alebo 
+        # responzy
 
 
 class ModelNameListView(APIView):
