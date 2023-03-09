@@ -24,38 +24,62 @@ class DeleteView(APIView):
 class ImportView(APIView):
     def post(self, request, *args, **kwargs):
         """
-        Insert request data into database. If id already in database, update.
+        Insert request data into database.
+
+        HTTP Codes
+            - 200 = Data created and updated
+            - 201 = Data created only
+            - 400 = Bad data in input data, all data until then saved
+        """
+        if type(request.data) == dict:
+            r = self.save_object(request.data)
+            if r: return r
+
+        elif type(request.data) == list:
+            for obj in request.data:
+                r = self.save_object(obj)
+                if r: return r
+                                
+        # All successful. Respond with what was created
+        return Response(request.data, status=status.HTTP_201_CREATED)
+
+    def save_object(self, obj):
+        """
+        Save an object into database. If id already in database, update.
         Keep working until error in data. When error found, return object 
         with its error. All data until error object is saved.
 
         TODO hopefully working correctly. I havent tested all outputs.
-
-        HTTP Codes
-            - 201 = All data saved
-            - 400 = Bad data in input data, all data until then saved
         """
-        for obj in request.data:
-            model_name = list(obj.keys())[0]
+        print('halo')
+        model_name = list(obj.keys())[0]
+
+        try:
             model = my_models[model_name]
+            print('halo')
+        except KeyError:
+            return Response(
+                    data=("Model {} does not exist in database".format(model_name)),
+                    status=status.HTTP_400_BAD_REQUEST
+                    )
 
-            try:
-                item = model.objects.get(pk=obj[model_name]['id'])
-                # if we give item (instance) param then save() does update()
-                serializer = my_serializers[model_name](item, data=obj[model_name])
-            except model.DoesNotExist:
-                # else save() does create()
-                serializer = my_serializers[model_name](data=obj[model_name])
+        try:
+            item = model.objects.get(pk=obj[model_name]['id'])
+            # if we give item (instance) param then save() does update()
+            serializer = my_serializers[model_name](item, data=obj[model_name])
+            created_only = False
+        except model.DoesNotExist:
+            # else save() does create()
+            serializer = my_serializers[model_name](data=obj[model_name])
+            created = True
 
-            if not serializer.is_valid():
-                obj['errors'] = serializer.errors
-                response_data = { 'object': obj }
-                return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+        if not serializer.is_valid():
+            obj['errors'] = serializer.errors
+            response_data = { 'object': obj }
+            return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
 
-            else:
-                serializer.save()
-                
-        # All successful. Respond with what was created
-        return Response(request.data, status=status.HTTP_201_CREATED)
+        else:
+            serializer.save()
 
 
 class ModelNameListView(APIView):
