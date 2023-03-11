@@ -27,20 +27,32 @@ class ImportView(APIView):
         Insert request data into database.
 
         HTTP Codes
-            - 200 = Data created and updated
-            - 201 = Data created only
-            - 400 = Bad data in input data, all data until then saved
+            - 200 = Data created or updated
+            - 400 = Bad data in input data, all data until then is saved
         """
+        
         if type(request.data) == dict:
-            r = self.save_object(request.data)
-            if r: return r
+            model_name = list(request.data.keys())[0]
+
+            try:
+                model = my_models[model_name]
+            except KeyError:
+                return Response(
+                        "Model {} does not exist in database".format(model_name),
+                        status=status.HTTP_400_BAD_REQUEST
+                        )
+
+            r = self.save_object(model, request.data)
+            print('aaa')
+            print(r)
+            return Response(r, status=status.HTTP_200_OK)
 
         elif type(request.data) == list:
             for obj in request.data:
                 r = self.save_object(obj)
-                if r: return r
+                print(r)
 
-    def save_object(self, obj):
+    def save_object(self, model, obj):
         """
         Save an object into database. If id already in database, update.
         Keep working until error in data. When error found, return object 
@@ -48,15 +60,7 @@ class ImportView(APIView):
 
         TODO hopefully working correctly. I havent tested all outputs.
         """
-        model_name = list(obj.keys())[0]
-
-        try:
-            model = my_models[model_name]
-        except KeyError:
-            return Response(
-                    "Model {} does not exist in database".format(model_name),
-                    status=status.HTTP_400_BAD_REQUEST
-                    )
+        model_name = model.__name__
 
         try:
             item = model.objects.get(pk=obj[model_name]['id'])
@@ -66,17 +70,18 @@ class ImportView(APIView):
             # else save() does create()
             serializer = my_serializers[model_name](data=obj[model_name])
 
+        serializer.is_valid(raise_exception=True)
         if not serializer.is_valid():
             obj['errors'] = serializer.errors
             response_data = { 'object': obj }
+            raise INVALID_DATA
             return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
 
         else:
-            serializer.save()
-
-        if updated: return Response(response_data, status=status.HTTP_200)
-        if created: return Response(response_data, status=status.HTTP_201_CREATED)
-        return Response(request.data, status=status.)
+            # TODO returns None if saved nothing (and updated nothing? try)
+            saved_object = serializer.save()
+            print(saved_object)
+            return saved_object
 
         # WIP neni to to vubec doriesene, treba to zjednotit asi, nemozem len tak hadzat kody alebo 
         # responzy
@@ -102,6 +107,7 @@ class ModelNameListView(APIView):
 
         # we give this to serializer to push it through to_representation()
         serializer = my_serializers[model_name](objs, many=True)
+        print(my_models[model_name])
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 

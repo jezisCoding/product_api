@@ -8,6 +8,9 @@ class AttributeName(models.Model):
     kod = models.CharField(max_length=31, default="", blank=True)
     zobrazit = models.BooleanField(blank=True, null=True)
 
+    def __str__(self):
+        return '{0} {1} {2}'.format(self.__class__.__name__, self.nazev, str(self.id))
+
 
 class AttributeValue(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)
