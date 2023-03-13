@@ -1,11 +1,17 @@
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework.exceptions import APIException
+#from rest_framework.serializers import ValidationError
 
 from .models import my_models
 from .serializers import my_serializers
 
 # Create your views here.
+
+#class ObjectValidationError(APIException):
+#    status_code = 400
+#    default_detail = "object validation error"
 
 class DeleteView(APIView):
     def delete(self, request, *args, **kwargs):
@@ -30,29 +36,40 @@ class ImportView(APIView):
             - 200 = Data created or updated
             - 400 = Bad data in input data, all data until then is saved
         """
-        
-        if type(request.data) == dict:
-            model_name = list(request.data.keys())[0]
-
-            try:
-                model = my_models[model_name]
-            except KeyError:
-                return Response(
-                        "Model {} does not exist in database".format(model_name),
-                        status=status.HTTP_400_BAD_REQUEST
-                        )
-
-            r = self.save_object(model, request.data)
-            print('aaa')
-            print(r)
-            return Response(r, status=status.HTTP_200_OK)
-
-        elif type(request.data) == list:
+        if type(request.data) == list:
+            good_data = []
             for obj in request.data:
-                r = self.save_object(obj)
-                print(r)
 
-    def save_object(self, model, obj):
+                model_name = list(obj.keys())[0]
+                if not self.get_model(model_name):
+                    return Response(
+                        "Model {} does not exist in database".format(model_name),
+                        status=status.HTTP_400_BAD_REQUEST)
+
+                item = self.save_object(obj, model_name)
+                
+                if not hasattr(item, 'errors'):
+                    good_data.append(item)
+                else:
+                    return Response(item, status=status.HTTP_400_BAD_REQUEST)
+            return Response(good_data, status=status.HTTP_200_OK)
+
+        elif type(request.data) == dict:
+            obj = request.data
+            model_name = list(obj.keys())[0]
+            if not self.get_model(model_name):
+                return Response(
+                    "Model {} does not exist in database".format(model_name),
+                    status=status.HTTP_400_BAD_REQUEST)
+
+            item = self.save_object(obj, model_name)
+
+            if not hasattr(item, 'errors'):
+                return Response(item, status=status.HTTP_200_OK)
+            else:
+                return Response(item, status=status.HTTP_400_BAD_REQUEST)
+
+    def save_object(self, obj, model_name):
         """
         Save an object into database. If id already in database, update.
         Keep working until error in data. When error found, return object 
@@ -60,31 +77,31 @@ class ImportView(APIView):
 
         TODO hopefully working correctly. I havent tested all outputs.
         """
-        model_name = model.__name__
+        model = self.get_model(model_name)
 
         try:
-            item = model.objects.get(pk=obj[model_name]['id'])
-            # if we give item (instance) param then save() does update()
-            serializer = my_serializers[model_name](item, data=obj[model_name])
+            db_obj = model.objects.get(pk=obj[model_name]['id'])
+            # if we give db_obj param then save() does update()
+            serializer = my_serializers[model_name](db_obj, data=obj[model_name])
         except model.DoesNotExist:
             # else save() does create()
             serializer = my_serializers[model_name](data=obj[model_name])
 
-        serializer.is_valid(raise_exception=True)
         if not serializer.is_valid():
             obj['errors'] = serializer.errors
-            response_data = { 'object': obj }
-            raise INVALID_DATA
-            return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+            return obj
 
         else:
-            # TODO returns None if saved nothing (and updated nothing? try)
-            saved_object = serializer.save()
-            print(saved_object)
-            return saved_object
+            item = serializer.save()
+            print(serializer.data)
+            return serializer.data
+            #return item
 
-        # WIP neni to to vubec doriesene, treba to zjednotit asi, nemozem len tak hadzat kody alebo 
-        # responzy
+    def get_model(self, model_name):
+        try:
+            return my_models[model_name]
+        except KeyError:
+            return None 
 
 
 class ModelNameListView(APIView):

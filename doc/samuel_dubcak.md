@@ -75,8 +75,8 @@
     - mohli být i nějaké testy
 
     - models
-      - některé pole, např. nazev, kod u AttributName by mohli být delší než 15 znaků
-      - (malá chyba) dobré je dávat __str__ a Meta class pro modely  
+      - některé pole, např. nazev, kod u AttributName by mohli být delší než 15 znaků mam
+      - (malá chyba) dobré je dávat __str__ a Meta class pro modely mam
       - cizí klíče by neměly být null=True, možná až na obrazek_id v Catalog
         modelu, protože ostatní modely tvoří mezitabulku v M2M vazbě, takže not null
         je zde nutnost
