@@ -16,3 +16,5 @@ Known bugs:
 /detail/: inak by to malo byt dobre (testy nemam)
 /import: ten import bezi poho np aj ked som ten id field override vymazal vsade?
 	 aj odmazat by sa to dalo (je to zakomentovane)
+	 when data is inserted REST should respond the data. But because i also do update on insert, 
+	 sometimes there is duplicate items in the same response

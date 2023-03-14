@@ -46,12 +46,12 @@ class ImportView(APIView):
                         "Model {} does not exist in database".format(model_name),
                         status=status.HTTP_400_BAD_REQUEST)
 
-                item = self.save_object(obj, model_name)
+                s_item = self.save_object(obj, model_name)
                 
-                if not hasattr(item, 'errors'):
-                    good_data.append(item)
+                if not hasattr(s_item, 'errors'):
+                    good_data.append(s_item)
                 else:
-                    return Response(item, status=status.HTTP_400_BAD_REQUEST)
+                    return Response(s_item, status=status.HTTP_400_BAD_REQUEST)
             return Response(good_data, status=status.HTTP_200_OK)
 
         elif type(request.data) == dict:
@@ -62,12 +62,12 @@ class ImportView(APIView):
                     "Model {} does not exist in database".format(model_name),
                     status=status.HTTP_400_BAD_REQUEST)
 
-            item = self.save_object(obj, model_name)
+            s_item = self.save_object(obj, model_name)
 
-            if not hasattr(item, 'errors'):
-                return Response(item, status=status.HTTP_200_OK)
+            if not hasattr(s_item, 'errors'):
+                return Response(s_item, status=status.HTTP_200_OK)
             else:
-                return Response(item, status=status.HTTP_400_BAD_REQUEST)
+                return Response(s_item, status=status.HTTP_400_BAD_REQUEST)
 
     def save_object(self, obj, model_name):
         """
@@ -89,13 +89,16 @@ class ImportView(APIView):
 
         if not serializer.is_valid():
             obj['errors'] = serializer.errors
+            print(obj)
+            print(serializer.data)
             return obj
 
         else:
             item = serializer.save()
+            print(item)
             print(serializer.data)
             return serializer.data
-            #return item
+            return item
 
     def get_model(self, model_name):
         try:
@@ -124,7 +127,6 @@ class ModelNameListView(APIView):
 
         # we give this to serializer to push it through to_representation()
         serializer = my_serializers[model_name](objs, many=True)
-        print(my_models[model_name])
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -149,8 +151,8 @@ class ModelNameIdView(APIView):
             obj = model.objects.get(id=id)
         except model.DoesNotExist:
             return Response(
-                {"res": "Object {model_name} with id {id} does not exist".format(
-                    model_name=model_name, id=id)},
+                "Object {model_name} with id {id} does not exist".format(
+                    model_name=model_name, id=id),
                 status=status.HTTP_400_BAD_REQUEST
                 )
 

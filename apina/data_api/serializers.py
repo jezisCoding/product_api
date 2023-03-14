@@ -50,8 +50,8 @@ class AttributeSerializer(serializers.ModelSerializer):
         return {
                 "Attribute": {
                     "id": instance.id,
-                    "nazev_atributu_id": instance.nazev_atributu_id_id,
-                    "hodnota_atributu_id": instance.hodnota_atributu_id_id
+                    "nazev_atributu_id": instance.nazev_atributu_id,
+                    "hodnota_atributu_id": instance.hodnota_atributu_id
                     }
                 }
 
@@ -144,16 +144,16 @@ class CatalogSerializer(serializers.ModelSerializer):
         if 'nazev' in validated_data.keys():
             item.nazev = validated_data['nazev']
         if 'obrazek_id' in validated_data.keys():
-            item.obrazek_id = validated_data['obrazek_id']
+            item.obrazek = validated_data['obrazek_id']
 
         if 'products_ids' in validated_data.keys():
-            item.products_ids.clear()
-            item.products_ids.set(validated_data['products_ids'])
+            item.products.clear()
+            item.products.set(validated_data['products_ids'])
             del validated_data['products_ids']
 
         if 'attributes_ids' in validated_data.keys():
-            item.attributes_ids.clear()
-            item.attributes_ids.set(validated_data['products_ids'])
+            item.attributes.clear()
+            item.attributes.set(validated_data['products_ids'])
             del validated_data['attributes_ids']
         
         return item
@@ -161,16 +161,16 @@ class CatalogSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         p_ids = []
         a_ids = []
-        for p_id in instance.products_ids.all():
+        for p_id in instance.products.all():
             p_ids.append(p_id.id)
-        for a_id in instance.attributes_ids.all():
+        for a_id in instance.attributes.all():
             a_ids.append(a_id.id)
 
         return {
                 "Catalog": {
                     "id": instance.id,
                     "nazev": instance.nazev,
-                    "obrazek_id": instance.obrazek_id_id,
+                    "obrazek_id": instance.obrazek_id,
                     "products_ids": p_ids,
                     "attributes_ids": a_ids
                     }

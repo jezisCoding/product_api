@@ -22,9 +22,9 @@ class AttributeValue(models.Model):
 
 class Attribute(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)
-    nazev_atributu_id = models.ForeignKey(AttributeName, 
+    nazev_atributu = models.ForeignKey(AttributeName, 
             on_delete=models.SET_NULL, null=True)
-    hodnota_atributu_id = models.ForeignKey(AttributeValue, 
+    hodnota_atributu = models.ForeignKey(AttributeValue, 
             on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
@@ -46,8 +46,8 @@ class Product(models.Model):
 
 class ProductAttributes(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)
-    attribute_id = models.ForeignKey(Attribute, on_delete=models.SET_NULL, null=True)
-    product_id = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    attribute = models.ForeignKey(Attribute, on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return '{0} {1}'.format(self.__class__.__name__, str(self.id))
@@ -64,8 +64,8 @@ class Image(models.Model):
 
 class ProductImage(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)
-    product_id = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
-    obrazek_id = models.ForeignKey(Image, on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    obrazek = models.ForeignKey(Image, on_delete=models.SET_NULL, null=True)
     nazev = models.CharField(max_length=63)
 
     def __str__(self):
@@ -75,10 +75,10 @@ class ProductImage(models.Model):
 class Catalog(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)
     nazev = models.CharField(max_length=63, default="", blank=True)
-    obrazek_id = models.ForeignKey(Image, on_delete=models.SET_NULL, null=True)
+    obrazek = models.ForeignKey(Image, on_delete=models.SET_NULL, null=True)
     # These are the list fields
-    products_ids = models.ManyToManyField(Product, blank=True)
-    attributes_ids = models.ManyToManyField(Attribute, blank=True)
+    products = models.ManyToManyField(Product, blank=True)
+    attributes = models.ManyToManyField(Attribute, blank=True)
 
     def __str__(self):
         return '{0} {1} {2}'.format(self.__class__.__name__, str(self.id), self.nazev)
