@@ -156,6 +156,7 @@ class CatalogSerializer(serializers.ModelSerializer):
             item.attributes.set(validated_data['products_ids'])
             del validated_data['attributes_ids']
         
+        item.save()
         return item
 
     def to_representation(self, instance):

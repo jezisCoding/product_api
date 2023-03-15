@@ -6,7 +6,7 @@ class AttributeName(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)
     nazev = models.CharField(max_length=31, default="", blank=True)
     kod = models.CharField(max_length=31, default="", blank=True)
-    zobrazit = models.BooleanField(blank=True, null=True)
+    zobrazit = models.BooleanField(blank=True, default=True)
 
     def __str__(self):
         return '{0} {1} {2}'.format(self.__class__.__name__, str(self.id), self.nazev)
@@ -23,9 +23,9 @@ class AttributeValue(models.Model):
 class Attribute(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)
     nazev_atributu = models.ForeignKey(AttributeName, 
-            on_delete=models.SET_NULL, null=True)
+            on_delete=models.CASCADE)
     hodnota_atributu = models.ForeignKey(AttributeValue, 
-            on_delete=models.SET_NULL, null=True)
+            on_delete=models.CASCADE)
 
     def __str__(self):
         return '{0} {1}'.format(self.__class__.__name__, str(self.id))
@@ -38,7 +38,7 @@ class Product(models.Model):
     cena = models.DecimalField(decimal_places=2, max_digits=12)
     mena = models.CharField(max_length=3)
     published_on = models.DateTimeField(blank=True, null=True)
-    is_published = models.BooleanField(blank=True, null=True)
+    is_published = models.BooleanField(blank=True, default=False)
 
     def __str__(self):
         return '{0} {1} {2}'.format(self.__class__.__name__, str(self.id), self.nazev)
@@ -46,8 +46,8 @@ class Product(models.Model):
 
 class ProductAttributes(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)
-    attribute = models.ForeignKey(Attribute, on_delete=models.SET_NULL, null=True)
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE, null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return '{0} {1}'.format(self.__class__.__name__, str(self.id))

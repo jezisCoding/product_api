@@ -9,10 +9,6 @@ from .serializers import my_serializers
 
 # Create your views here.
 
-#class ObjectValidationError(APIException):
-#    status_code = 400
-#    default_detail = "object validation error"
-
 class DeleteView(APIView):
     def delete(self, request, *args, **kwargs):
         """
@@ -31,14 +27,20 @@ class ImportView(APIView):
     def post(self, request, *args, **kwargs):
         """
         Insert request data into database.
+        Keep working until error in data. All data until error object is saved.
+        :returns: All successfully saved data or a specific object with error.
 
         HTTP Codes
             - 200 = Data created or updated
             - 400 = Bad data in input data, all data until then is saved
         """
-        if type(request.data) == list:
+        data = request.data
+        if type(data) == dict:
+            data = [request.data]
+
+        if type(data) == list:
             good_data = []
-            for obj in request.data:
+            for obj in data:
 
                 model_name = list(obj.keys())[0]
                 if not self.get_model(model_name):
@@ -54,31 +56,23 @@ class ImportView(APIView):
                     return Response(s_item, status=status.HTTP_400_BAD_REQUEST)
             return Response(good_data, status=status.HTTP_200_OK)
 
-        elif type(request.data) == dict:
-            obj = request.data
-            model_name = list(obj.keys())[0]
-            if not self.get_model(model_name):
-                return Response(
-                    "Model {} does not exist in database".format(model_name),
-                    status=status.HTTP_400_BAD_REQUEST)
-
-            s_item = self.save_object(obj, model_name)
-
-            if not hasattr(s_item, 'errors'):
-                return Response(s_item, status=status.HTTP_200_OK)
-            else:
-                return Response(s_item, status=status.HTTP_400_BAD_REQUEST)
-
     def save_object(self, obj, model_name):
         """
         Save an object into database. If id already in database, update.
-        Keep working until error in data. When error found, return object 
-        with its error. All data until error object is saved.
+        When error found, return object with its error.
 
-        TODO hopefully working correctly. I havent tested all outputs.
+        :returns: A successfully saved object, or an object with its error,
+            or None when object does not ex
         """
         model = self.get_model(model_name)
 
+        serializer = my_serializers[model_name](data=obj[model_name])
+        if not serializer.is_valid():
+            obj['errors'] = serializer.errors
+            print(obj)
+            return obj
+
+        # if object with given id exists, update it
         try:
             db_obj = model.objects.get(pk=obj[model_name]['id'])
             # if we give db_obj param then save() does update()
@@ -87,18 +81,9 @@ class ImportView(APIView):
             # else save() does create()
             serializer = my_serializers[model_name](data=obj[model_name])
 
-        if not serializer.is_valid():
-            obj['errors'] = serializer.errors
-            print(obj)
-            print(serializer.data)
-            return obj
-
-        else:
-            item = serializer.save()
-            print(item)
-            print(serializer.data)
-            return serializer.data
-            return item
+        item = serializer.save()
+        print(serializer.data)
+        return serializer.data
 
     def get_model(self, model_name):
         try:

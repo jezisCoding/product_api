@@ -50,22 +50,22 @@
     - requirements
       - pkg_resources==0.0.0 způsobovali chybu při instalaci
       - (drobnost) django-rest-framework==0.1.0 je nějaký package na pypi, ale není to rest framework, takže
-        ten raději neinstalovat
+        ten raději neinstalovat MAM
     - (drobnost) možná až moc souborů v root adresáři, test data bych dal do adresáře test
-      db a notes třeba do adresáře docs
-    - (drobnost) apina je cool název :), ale spíš bych nechal jen api
+      db a notes třeba do adresáře docs MAM
+    - (drobnost) apina je cool název :), ale spíš bych nechal jen api 
 
 ### Funkčnost
 
     - [POST] /import
-        - na zadání chybného názvu modelu vrací api 500 internal server error
-        - na zadání dictu jako root elementu (namísto list) taktéž 500 internal server error
-        - když nezadáme "id", taktéž 500 internal server error
-        - (malá chyba) na update také vracíš 201 created status kód, na update lepší 200
+        - na zadání chybného názvu modelu vrací api 500 internal server error done
+        - na zadání dictu jako root elementu (namísto list) taktéž 500 internal server error done
+        - když nezadáme "id", taktéž 500 internal server error done
+        - (malá chyba) na update také vracíš 201 created status kód, na update lepší 200 done
         - foreign keys by neměly jít zadat prázdné (kromě asi obrazek_id v Catalog)
 
     - [GET] /detail & /detail/{ID}
-        - nelze vrátit data pro ProductAttributes model (Object of type Attribute is not JSON serializable) 
+        - nelze vrátit data pro ProductAttributes model (Object of type Attribute is not JSON serializable) mam
         - (malá chyba) u neexistujícího ID bych spíše vrátil 404 status message, ale 400 není úplně špatně
         - (malá chyba) při vrácení dat už bych nezdůrazňoval v reponse
           opět název modelu, ten je už v URL
@@ -81,14 +81,14 @@
         modelu, protože ostatní modely tvoří mezitabulku v M2M vazbě, takže not null
         je zde nutnost
       - (menší chyba) u BooleanField taky moc nedává smysl null=True, spíše
-        lepší nějaký default
+        lepší nějaký default mam
       - (malá chyba) u mezitabulek nebo Attribute modelu je lepší dát u ForeignKeys's
-        on_delete=CASCADE
+        on_delete=CASCADE mam
       - (malá chyba) id field bys zde ani nemusel specifikovat a nechat djangovský
         build in
       - (drobnost) cizí kliče a many to many je lepší nazývat bez toho id a ids,
         i když v DB to jsou vlastně ID, když s tím pracuješ v djangu, dostáváš
-        už rovnou instance, např. catalog.products.all()
+        už rovnou instance, např. catalog.products.all() mam
     - serializers
       - (menší chyba) lepší by bylo vyspecifikovat fieldy na úrovni
         serializérů a ne v to_representation method, název modelu,
