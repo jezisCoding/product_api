@@ -1,5 +1,4 @@
 Questions:
-Should i deal with deleting? Cascade? (I don't have an endpoint for deleteing)
 On /import/: If i encounter an object i already have(id and model are identical) then I always do update(i overwrite values under keys by new values), or do i only write values in case the column in database is still empty?
 Can data be wrong in a way that an object refers by a foreign key to an object which is not yet in the database (meaning it came earlier on input)? And if yes, can it be wrong in many other ways too?
 What should api return on partially successful import?
@@ -11,10 +10,7 @@ I could also not keep django generated files in my source
 Tests
 
 Known bugs:
-/detail/ProductImage: Image is not JSON serializable
-/detail/ProductAttributes: Foreign keys are empty
-/detail/: inak by to malo byt dobre (testy nemam)
 /import: ten import bezi poho np aj ked som ten id field override vymazal vsade?
 	 aj odmazat by sa to dalo (je to zakomentovane)
-	 when data is inserted REST should respond the data. But because i also do update on insert, 
+	 when data is inserted REST should respond with the data. But because i also do update on import/, 
 	 sometimes there is duplicate items in the same response

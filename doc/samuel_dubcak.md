@@ -58,10 +58,10 @@
 ### Funkčnost
 
     - [POST] /import
-        - na zadání chybného názvu modelu vrací api 500 internal server error done
-        - na zadání dictu jako root elementu (namísto list) taktéž 500 internal server error done
-        - když nezadáme "id", taktéž 500 internal server error done
-        - (malá chyba) na update také vracíš 201 created status kód, na update lepší 200 done
+        - na zadání chybného názvu modelu vrací api 500 internal server error DONE
+        - na zadání dictu jako root elementu (namísto list) taktéž 500 internal server error DONE
+        - když nezadáme "id", taktéž 500 internal server error DONE
+        - (malá chyba) na update také vracíš 201 created status kód, na update lepší 200 DONE
         - foreign keys by neměly jít zadat prázdné (kromě asi obrazek_id v Catalog)
 
     - [GET] /detail & /detail/{ID}
@@ -81,14 +81,14 @@
         modelu, protože ostatní modely tvoří mezitabulku v M2M vazbě, takže not null
         je zde nutnost
       - (menší chyba) u BooleanField taky moc nedává smysl null=True, spíše
-        lepší nějaký default mam
+        lepší nějaký default MAM
       - (malá chyba) u mezitabulek nebo Attribute modelu je lepší dát u ForeignKeys's
-        on_delete=CASCADE mam
+        on_delete=CASCADE MAM
       - (malá chyba) id field bys zde ani nemusel specifikovat a nechat djangovský
         build in
       - (drobnost) cizí kliče a many to many je lepší nazývat bez toho id a ids,
         i když v DB to jsou vlastně ID, když s tím pracuješ v djangu, dostáváš
-        už rovnou instance, např. catalog.products.all() mam
+        už rovnou instance, např. catalog.products.all() MAM
     - serializers
       - (menší chyba) lepší by bylo vyspecifikovat fieldy na úrovni
         serializérů a ne v to_representation method, název modelu,

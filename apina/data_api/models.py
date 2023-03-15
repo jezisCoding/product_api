@@ -46,8 +46,8 @@ class Product(models.Model):
 
 class ProductAttributes(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)
-    attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE, null=True)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+    attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     def __str__(self):
         return '{0} {1}'.format(self.__class__.__name__, str(self.id))
@@ -64,8 +64,8 @@ class Image(models.Model):
 
 class ProductImage(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
-    obrazek = models.ForeignKey(Image, on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    obrazek = models.ForeignKey(Image, on_delete=models.CASCADE)
     nazev = models.CharField(max_length=63)
 
     def __str__(self):
