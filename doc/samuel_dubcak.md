@@ -62,24 +62,24 @@
         - na zadání dictu jako root elementu (namísto list) taktéž 500 internal server error DONE
         - když nezadáme "id", taktéž 500 internal server error DONE
         - (malá chyba) na update také vracíš 201 created status kód, na update lepší 200 DONE
-        - foreign keys by neměly jít zadat prázdné (kromě asi obrazek_id v Catalog)
+        - foreign keys by neměly jít zadat prázdné (kromě asi obrazek_id v Catalog) DONE
 
     - [GET] /detail & /detail/{ID}
-        - nelze vrátit data pro ProductAttributes model (Object of type Attribute is not JSON serializable) mam
-        - (malá chyba) u neexistujícího ID bych spíše vrátil 404 status message, ale 400 není úplně špatně
+        - nelze vrátit data pro ProductAttributes model (Object of type Attribute is not JSON serializable) MAM
+        - (malá chyba) u neexistujícího ID bych spíše vrátil 404 status message, ale 400 není úplně špatně MAM
         - (malá chyba) při vrácení dat už bych nezdůrazňoval v reponse
           opět název modelu, ten je už v URL
 
 ### Kód a struktura
-    - (malá chyba) PEP 8 - formátování, mezi classami by měly být 2 mezery
+    - (malá chyba) PEP 8 - formátování, mezi classami by měly být 2 mezery MAM
     - mohli být i nějaké testy
 
     - models
-      - některé pole, např. nazev, kod u AttributName by mohli být delší než 15 znaků mam
-      - (malá chyba) dobré je dávat __str__ a Meta class pro modely mam
+      - některé pole, např. nazev, kod u AttributName by mohli být delší než 15 znaků MAM
+      - (malá chyba) dobré je dávat __str__ a Meta class pro modely MAM
       - cizí klíče by neměly být null=True, možná až na obrazek_id v Catalog
         modelu, protože ostatní modely tvoří mezitabulku v M2M vazbě, takže not null
-        je zde nutnost
+        je zde nutnost MAM
       - (menší chyba) u BooleanField taky moc nedává smysl null=True, spíše
         lepší nějaký default MAM
       - (malá chyba) u mezitabulek nebo Attribute modelu je lepší dát u ForeignKeys's

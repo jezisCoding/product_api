@@ -1,8 +1,3 @@
-Questions:
-On /import/: If i encounter an object i already have(id and model are identical) then I always do update(i overwrite values under keys by new values), or do i only write values in case the column in database is still empty?
-Can data be wrong in a way that an object refers by a foreign key to an object which is not yet in the database (meaning it came earlier on input)? And if yes, can it be wrong in many other ways too?
-What should api return on partially successful import?
-
 My notes:
 Do i want a get that returns its friends via foreign key?
 How to make sure my database has no dead rows?

@@ -7,6 +7,8 @@ from rest_framework.exceptions import APIException
 from .models import my_models
 from .serializers import my_serializers
 
+import inspect
+
 # Create your views here.
 
 class DeleteView(APIView):
@@ -66,20 +68,21 @@ class ImportView(APIView):
         """
         model = self.get_model(model_name)
 
-        serializer = my_serializers[model_name](data=obj[model_name])
-        if not serializer.is_valid():
-            obj['errors'] = serializer.errors
-            print(obj)
-            return obj
-
         # if object with given id exists, update it
         try:
             db_obj = model.objects.get(pk=obj[model_name]['id'])
-            # if we give db_obj param then save() does update()
+            # if we give db_obj arg then save() does update()
             serializer = my_serializers[model_name](db_obj, data=obj[model_name])
         except model.DoesNotExist:
             # else save() does create()
             serializer = my_serializers[model_name](data=obj[model_name])
+
+        print(inspect.getsource(serializer.create))
+        print(inspect.getsource(serializer.update))
+        if not serializer.is_valid():
+            obj['errors'] = serializer.errors
+            print(obj)
+            return obj
 
         item = serializer.save()
         print(serializer.data)
@@ -99,7 +102,7 @@ class ModelNameListView(APIView):
 
         HTTP Codes
             - 200 = Success
-            - 400 = Model does not exist
+            - 404 = Model does not exist
         """
         
         try:
@@ -107,7 +110,7 @@ class ModelNameListView(APIView):
         except KeyError:
             return Response(
                     data=("Model {} does not exist".format(model_name)),
-                    status=status.HTTP_400_BAD_REQUEST
+                    status=status.HTTP_404_NOT_FOUND
                     )
 
         # we give this to serializer to push it through to_representation()
@@ -122,14 +125,15 @@ class ModelNameIdView(APIView):
 
         HTTP Codes
             - 200 = Success
-            - 400 = Id does not exist
+            - 404 = Id does not exist
+            - 404 = Model does not exist
         """
         try:
             model = my_models[model_name]
         except KeyError:
             return Response(
                     data=("Model {} does not exist".format(model_name)),
-                    status=status.HTTP_400_BAD_REQUEST
+                    status=status.HTTP_404_NOT_FOUND
                     )
 
         try:
@@ -138,7 +142,7 @@ class ModelNameIdView(APIView):
             return Response(
                 "Object {model_name} with id {id} does not exist".format(
                     model_name=model_name, id=id),
-                status=status.HTTP_400_BAD_REQUEST
+                status=status.HTTP_404_NOT_FOUND
                 )
 
         # we give this to serializer to push it through to_representation()
