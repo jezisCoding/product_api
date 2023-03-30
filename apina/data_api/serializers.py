@@ -39,12 +39,30 @@ class AttributeValueSerializer(serializers.ModelSerializer):
                 }
 
 
-class AttributeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = my_models["Attribute"]
-        fields = '__all__'
+class AttributeSerializer(serializers.Serializer):
+    """
+    We don't use ModelSerializer because the JSON fields don't match the Models.
+    """
+    id = serializers.IntegerField(validators=[])
+    nazev_atributu_id = serializers.IntegerField()
+    hodnota_atributu_id = serializers.IntegerField()
 
-    #id = serializers.IntegerField(validators=[])
+    # It might be appropriate to use validators in creates() and updates()
+    def create(self, validated_data):
+        return my_models['Attribute'].objects.create(
+            id = validated_data.get('id'), 
+            nazev_atributu = my_models['AttributeName'].objects.get(
+                pk=validated_data.get('nazev_atributu_id')),
+            hodnota_atributu = my_models['AttributeValue'].objects.get(
+                pk=validated_data.get('hodnota_atributu_id')))
+
+    def update(self, instance, validated_data):
+        instance.nazev_atributu = my_models['AttributeName'].objects.get(
+            pk=validated_data.get('nazev_atributu_id'))
+        instance.hodnota_atributu = my_models['AttributeValue'].objects.get(
+            pk=validated_data.get('hodnota_atributu_id'))
+        instance.save()
+        return instance
 
     def to_representation(self, instance):
         return {
@@ -56,12 +74,56 @@ class AttributeSerializer(serializers.ModelSerializer):
                 }
 
 
-class ProductSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = my_models["Product"]
-        fields = '__all__'
+class ProductSerializer(serializers.Serializer):
+    id = serializers.IntegerField(validators=[])
+    nazev = serializers.CharField(required=False)
+    description = serializers.CharField(required=False)
+    cena = serializers.FloatField(required=False)
+    mena = serializers.CharField(required=False)
+    published_on = serializers.DateTimeField(required=False, allow_null=True)
+    is_published = serializers.BooleanField(required=False)
 
-    #id = serializers.IntegerField(validators=[])
+    def create(self, validated_data):
+        kwparams = {}
+        if 'nazev' in validated_data.keys():
+            id = validated_data.get('id')
+            kwparams['id'] = id 
+        if 'nazev' in validated_data.keys():
+            nazev = validated_data.get('nazev')
+            kwparams['nazev'] = nazev
+        if 'description' in validated_data.keys():
+            description = validated_data.get('description')
+            kwparams['description'] = description
+        if 'cena' in validated_data.keys():
+            cena = validated_data.get('cena')
+            kwparams['cena'] = cena
+        if 'mena' in validated_data.keys():
+            mena = validated_data.get('mena')
+            kwparams['mena'] = mena
+        if 'published_on' in validated_data.keys():
+            published_on = validated_data.get('published_on')
+            kwparams['published_on'] = published_on
+        if 'is_published' in validated_data.keys():
+            is_published = validated_data.get('is_published')
+            kwparams['is_published'] = is_published
+        print(kwparams)
+        return my_models['Product'].objects.create(**kwparams)
+
+    def update(self, instance, validated_data):
+        if 'nazev' in validated_data.keys():
+            instance.nazev = validated_data.get('nazev')
+        if 'description' in validated_data.keys():
+            instance.description = validated_data.get('description')
+        if 'cena' in validated_data.keys():
+            instance.cena = validated_data.get('cena')
+        if 'mena' in validated_data.keys():
+            instance.mena = validated_data.get('mena')
+        if 'published_on' in validated_data.keys():
+            instance.published_on = validated_data.get('published_on')
+        if 'is_published' in validated_data.keys():
+            instance.is_published = validated_data.get('is_published')
+        instance.save()
+        return instance
 
     def to_representation(self, instance):
         return {
@@ -111,12 +173,29 @@ class ImageSerializer(serializers.ModelSerializer):
                 }
 
 
-class ProductImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = my_models["ProductImage"]
-        fields = '__all__'
+class ProductImageSerializer(serializers.Serializer):
+    id = serializers.IntegerField(validators=[])
+    product = serializers.IntegerField()
+    obrazek_id = serializers.IntegerField()
+    nazev = serializers.CharField()
 
-    #id = serializers.IntegerField(validators=[])
+    def create(self, validated_data):
+        return my_models['ProductImage'].objects.create(
+            id = validated_data['id'],
+            product = my_models['Product'].objects.get(
+                pk=validated_data['product']),
+            obrazek = my_models['Image'].objects.get(
+                pk=validated_data['obrazek_id']),
+            nazev = validated_data['nazev'])
+
+    def update(self, instance, validated_data):
+        instance.product = my_models['Product'].objects.get(
+            pk=validated_data['product'])
+        instance.obrazek = my_models['Image'].objects.get(
+            pk=validated_data['obrazek_id'])
+        instance.nazev = validated_data['nazev']
+        instance.save() 
+        return instance
 
     def to_representation(self, instance):
         return {

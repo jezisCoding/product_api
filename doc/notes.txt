@@ -9,3 +9,9 @@ Known bugs:
 	 aj odmazat by sa to dalo (je to zakomentovane)
 	 when data is inserted REST should respond with the data. But because i also do update on import/, 
 	 sometimes there is duplicate items in the same response
+
+
+import - update/create vyskusat
+ked vymazem required validator v serializeri tak zostane v modeli? bude sa model nedat ulozit bez nazev_attr a hodnota_attr?
+validatory serializerov ktore som si sam nadefinoval -- prechadzaju nejake zle data v prislusnych objektoch?
+update/create: if not None tie veci

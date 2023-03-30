@@ -66,6 +66,7 @@ class ImportView(APIView):
         :returns: A successfully saved object, or an object with its error,
             or None when object does not ex
         """
+        print(obj)
         model = self.get_model(model_name)
 
         # if object with given id exists, update it
@@ -77,15 +78,11 @@ class ImportView(APIView):
             # else save() does create()
             serializer = my_serializers[model_name](data=obj[model_name])
 
-        print(inspect.getsource(serializer.create))
-        print(inspect.getsource(serializer.update))
         if not serializer.is_valid():
             obj['errors'] = serializer.errors
-            print(obj)
             return obj
 
-        item = serializer.save()
-        print(serializer.data)
+        serializer.save()
         return serializer.data
 
     def get_model(self, model_name):
