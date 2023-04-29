@@ -21,7 +21,7 @@ Then, in `product_catalog_api` folder run:\
 
 ## How to Run
 In `product_catalog_api/apina` folder:\
-Make sure you have your virtual environment activated.
+Make sure you have your virtual environment activated.\
 `. ../venv/bin/activate`\
 Then run:\
 `python manage.py runserver`
