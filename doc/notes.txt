@@ -8,10 +8,16 @@ Known bugs:
 /import: ten import bezi poho np aj ked som ten id field override vymazal vsade?
 	 aj odmazat by sa to dalo (je to zakomentovane)
 	 when data is inserted REST should respond with the data. But because i also do update on import/, 
+	 
 	 sometimes there is duplicate items in the same response
+	 overall bugs present - data not saving for example - incongruence between serializers and models
 
 
 import - update/create vyskusat
 ked vymazem required validator v serializeri tak zostane v modeli? bude sa model nedat ulozit bez nazev_attr a hodnota_attr?
 validatory serializerov ktore som si sam nadefinoval -- prechadzaju nejake zle data v prislusnych objektoch?
-update/create: if not None tie veci
+update/create: if not None tie veci (asi sa vyriesi samo ked opravim tie bugy)
+
+To be changed:
+apina -> api
+	aj v readme
