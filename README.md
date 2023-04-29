@@ -1,7 +1,7 @@
 ## About
 Simple Django read/write only e-shop REST API.\
 Made as an assignment for a job interview.\
-Some names and code is in Czech.
+Some names are in Czech.
 
 A database diagram and test data are also here.
 
@@ -20,6 +20,10 @@ Then, in `product_catalog_api` folder run:\
 `python manage.py migrate`
 
 ## How to Run
+In `product_catalog_api/apina` folder:\
+Make sure you have your virtual environment activated.
+`. ../venv/bin/activate`\
+Then run:\
 `python manage.py runserver`
 
 ## Known bugs and my notes
