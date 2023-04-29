@@ -102,12 +102,12 @@
     - views 
         - [POST] /import/
           - (drobnost) lepší využít update_or_create metodu djanga, ale jinak to máš správně
-          - zde nehlídáš, jestli název modelu existuje v my_models done
-            - využít try/except done
+          - zde nehlídáš, jestli název modelu existuje v my_models MAM
+            - využít try/except MAM
           - taky bys mohl hlídat formát příchozích dat, jeslti jsou v listu a ne třeba v dictu
-            - využít try/except
-        - [GET] /detail & /detail/{ID} done
-          - (menší chyba) mohl by si hlídat neexistující název modelu i v detailu/{ID} done
+            - využít try/except MAM
+        - [GET] /detail & /detail/{ID} MAM
+          - (menší chyba) mohl by si hlídat neexistující název modelu i v detailu/{ID} MAM
 
 # Tvé otázky v notes
 1) je pravda, že nemáš delete endoint, ale určitě pro mezitabulky nebo Attribute model je lepší
