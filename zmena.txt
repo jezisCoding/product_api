@@ -1,3 +1,0 @@
-readme.md: 
-	ked zmenim apina na api tak aj v howto
-
