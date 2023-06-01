@@ -48,7 +48,7 @@
         
 ### Obecné  
     - requirements
-      - pkg_resources==0.0.0 způsobovali chybu při instalaci
+      - pkg_resources==0.0.0 způsobovali chybu při instalaci MAM
       - (drobnost) django-rest-framework==0.1.0 je nějaký package na pypi, ale není to rest framework, takže
         ten raději neinstalovat MAM
     - (drobnost) možná až moc souborů v root adresáři, test data bych dal do adresáře test
