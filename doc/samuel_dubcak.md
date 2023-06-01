@@ -45,7 +45,7 @@
 
 
 [-]
-
+        
 ### Obecné  
     - requirements
       - pkg_resources==0.0.0 způsobovali chybu při instalaci
@@ -62,7 +62,7 @@
         - na zadání dictu jako root elementu (namísto list) taktéž 500 internal server error DONE
         - když nezadáme "id", taktéž 500 internal server error DONE
         - (malá chyba) na update také vracíš 201 created status kód, na update lepší 200 DONE
-        - foreign keys by neměly jít zadat prázdné (kromě asi obrazek_id v Catalog) DONE
+        - foreign keys by neměly jít zadat prázdné (kromě asi obrazek_id v Catalog) PISS OFF - na urovni modelov musia byt nullable ale v serializeri mozem si ustanovit co chcem (also consider this^^)
 
     - [GET] /detail & /detail/{ID}
         - nelze vrátit data pro ProductAttributes model (Object of type Attribute is not JSON serializable) MAM

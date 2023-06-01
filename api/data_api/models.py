@@ -22,9 +22,9 @@ class AttributeValue(models.Model):
 
 class Attribute(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)
-    nazev_atributu = models.ForeignKey(AttributeName, 
+    nazev_atributu = models.ForeignKey(AttributeName, null=True,
             on_delete=models.CASCADE)
-    hodnota_atributu = models.ForeignKey(AttributeValue, 
+    hodnota_atributu = models.ForeignKey(AttributeValue, null=True,
             on_delete=models.CASCADE)
 
     def __str__(self):
@@ -46,8 +46,10 @@ class Product(models.Model):
 
 class ProductAttributes(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)
-    attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    attribute = models.ForeignKey(Attribute, null=True, 
+            on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, null=True, 
+            on_delete=models.CASCADE)
 
     def __str__(self):
         return '{0} {1}'.format(self.__class__.__name__, str(self.id))
@@ -64,8 +66,8 @@ class Image(models.Model):
 
 class ProductImage(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    obrazek = models.ForeignKey(Image, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
+    obrazek = models.ForeignKey(Image, null=True, on_delete=models.CASCADE)
     nazev = models.CharField(max_length=63)
 
     def __str__(self):
@@ -75,7 +77,7 @@ class ProductImage(models.Model):
 class Catalog(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)
     nazev = models.CharField(max_length=63, default="", blank=True)
-    obrazek = models.ForeignKey(Image, on_delete=models.SET_NULL, null=True)
+    obrazek = models.ForeignKey(Image, null=True, on_delete=models.SET_NULL)
     # These are the list fields
     products = models.ManyToManyField(Product, blank=True)
     attributes = models.ManyToManyField(Attribute, blank=True)
