@@ -2,12 +2,10 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import APIException
-#from rest_framework.serializers import ValidationError
+from rest_framework.serializers import ValidationError
 
 from .models import my_models
 from .serializers import my_serializers
-
-import inspect
 
 # Create your views here.
 
@@ -29,8 +27,10 @@ class ImportView(APIView):
     def post(self, request, *args, **kwargs):
         """
         Insert request data into database.
-        Keep working until error in data. All data until error object is saved.
-        :returns: All successfully saved data or a specific object with error.
+        Keep working until error found in data. All data until object with
+        error is saved.
+        :returns: All successfully saved data or a specific object with its
+            error.
 
         HTTP Codes
             - 200 = Data created or updated
@@ -51,11 +51,8 @@ class ImportView(APIView):
                         status=status.HTTP_400_BAD_REQUEST)
 
                 s_item = self.save_object(obj, model_name)
-                
-                if not hasattr(s_item, 'errors'):
-                    good_data.append(s_item)
-                else:
-                    return Response(s_item, status=status.HTTP_400_BAD_REQUEST)
+                good_data.append(s_item)
+
             return Response(good_data, status=status.HTTP_200_OK)
 
     def save_object(self, obj, model_name):
@@ -72,15 +69,15 @@ class ImportView(APIView):
         # if object with given id exists, update it
         try:
             db_obj = model.objects.get(pk=obj[model_name]['id'])
-            # if we give db_obj arg then save() does update()
+            # if we give db_obj arg then serializer.save() does update()
             serializer = my_serializers[model_name](db_obj, data=obj[model_name])
         except model.DoesNotExist:
-            # else save() does create()
+            # otherwise serializer.save() does create()
             serializer = my_serializers[model_name](data=obj[model_name])
 
         if not serializer.is_valid():
             obj['errors'] = serializer.errors
-            return obj
+            raise ValidationError(obj)
 
         serializer.save()
         return serializer.data

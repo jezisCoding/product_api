@@ -216,7 +216,8 @@ class ProductImageSerializer(serializers.Serializer):
 
 class CatalogSerializer(serializers.ModelSerializer):
     """
-    We don't use ModelSerializer because the JSON fields don't match the Models.
+    We don't use ModelSerializer because the test data JSON fields don't 
+    match the Models.
     """
     class Meta:
         model = my_models["Image"]
@@ -244,7 +245,8 @@ class CatalogSerializer(serializers.ModelSerializer):
 
 #class CatalogSerializer(serializers.Serializer):
 #    """
-#    We don't use ModelSerializer because the JSON fields don't match the Models.
+#    We don't use ModelSerializer because the test data JSON fields don't 
+#    match the Models.
 #    """
 #    id = serializers.IntegerField(validators=[])
 #
