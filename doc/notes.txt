@@ -18,6 +18,10 @@ ked vymazem required validator v serializeri tak zostane v modeli? bude sa model
 validatory serializerov ktore som si sam nadefinoval -- prechadzaju nejake zle data v prislusnych objektoch?
 update/create: if not None tie veci (asi sa vyriesi samo ked opravim tie bugy)
 
-To be changed:
+TODO:
 apina -> api
 	aj v readme
+catalog ma import error a nahravanie sa neskonci ked narazi na error
+vsetky ostatne importy vyzeraju dobre
+
+autotesty

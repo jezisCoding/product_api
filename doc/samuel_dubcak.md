@@ -98,7 +98,7 @@
         neukládáš, tedy chtělo by to item.save() na konci 
           - nebo tady můžeš využít např. super().save(item, validated_data), což
             by ti zařídilo update jednoduchý polí (i které bys pak do modelu přidal) 
-    - urls - (menší chyba) máš zduplikované ursl všechny
+    - urls - (menší chyba) máš zduplikované ursl všechny NEMAM, je tam lomitko
     - views 
         - [POST] /import/
           - (drobnost) lepší využít update_or_create metodu djanga, ale jinak to máš správně
