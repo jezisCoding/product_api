@@ -1,8 +1,6 @@
 My notes:
-Do i want a get that returns its friends via foreign key?
-How to make sure my database has no dead rows?
 I could also not keep django generated files in my source
-Tests
+
 
 Known bugs:
 /import: ten import bezi poho np aj ked som ten id field override vymazal vsade?
@@ -13,15 +11,27 @@ Known bugs:
 	 overall bugs present - data not saving for example - incongruence between serializers and models
 
 
-import - update/create vyskusat
-ked vymazem required validator v serializeri tak zostane v modeli? bude sa model nedat ulozit bez nazev_attr a hodnota_attr?
-validatory serializerov ktore som si sam nadefinoval -- prechadzaju nejake zle data v prislusnych objektoch?
-update/create: if not None tie veci (asi sa vyriesi samo ked opravim tie bugy)
-
-TODO:
+To do:
 apina -> api
 	aj v readme
 catalog ma import error a nahravanie sa neskonci ked narazi na error
 vsetky ostatne importy vyzeraju dobre
-
 autotesty
+
+
+Doing Import:
+update/create vyskusat
+ked vymazem required validator v serializeri tak zostane v modeli? bude sa model nedat ulozit bez nazev_attr a hodnota_attr?
+validatory serializerov ktore som si sam nadefinoval -- prechadzaju nejake zle data v prislusnych objektoch?
+update/create: if not None tie veci (asi sa vyriesi samo ked opravim tie bugy)
+
+
+Doing Testy:
+Test: stav pred, vstup, stav po
+Testujem: 
+	vsetky endpointy: 
+		import velky + detaily po castiach(tazky test)
+		import jednotlivy + detail jednotlivy(nie creva, iba z vonku)
+		import vacsi + detail vacsi
+		deletealldata = whatever pred, nic po
+		aha, takze aj import vracia response predsa.
