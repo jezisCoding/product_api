@@ -16,11 +16,11 @@ Then, in `product_catalog_api` folder run:
 `. venv/bin/activate`  
 `pip install --upgrade pip`  
 `pip install -r requirements.txt`  
-`cd apina`  
+`cd api`  
 `python manage.py migrate`
 
 ## How to Run
-In `product_catalog_api/apina` folder:  
+In `product_catalog_api/api` folder:  
 Make sure you have your virtual environment activated.  
 `. ../venv/bin/activate`  
 Then run:  
