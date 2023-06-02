@@ -4,8 +4,8 @@ from django.db import models
 
 class AttributeName(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)
-    nazev = models.CharField(max_length=31, default="", blank=True)
-    kod = models.CharField(max_length=31, default="", blank=True)
+    nazev = models.CharField(max_length=31, blank=True, default="")
+    kod = models.CharField(max_length=31, blank=True, default="")
     zobrazit = models.BooleanField(blank=True, default=True)
 
     def __str__(self):
