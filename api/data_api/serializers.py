@@ -269,7 +269,7 @@ class CatalogSerializer(serializers.ModelSerializer):
 #        # create needs an id
 #        #if 'id' in validated_data.keys():
 #        #    id = validated_data.get('id')
-#        #    create_params['id'] = id 
+#        #    create_params['id'] = id
 #        if 'nazev' in validated_data.keys():
 #            create_params['nazev'] = validated_data.get('nazev')
 #        if 'obrazek_id' in validated_data.keys():
@@ -316,7 +316,7 @@ class CatalogSerializer(serializers.ModelSerializer):
 #        instance.obrazek = my_models['Image'].objects.get(
 #            pk=validated_data['obrazek_id'])
 #        instance.nazev = validated_data['nazev']
-#        instance.save() 
+#        instance.save()
 #        return instance
 #
 #
