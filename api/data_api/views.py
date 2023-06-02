@@ -81,7 +81,6 @@ class ImportView(APIView):
 
         serializer.save()
         print("serializer.data", serializer.data)
-        print("serializer.validated_data", serializer.validated_data)
         return serializer.data
 
     def get_model(self, model_name):

@@ -37,29 +37,23 @@ class AttributeSerializer(serializers.Serializer):
     We don't use ModelSerializer because the JSON fields don't match the Models.
     """
     id = serializers.IntegerField(required=True)
-    # DOES NOT MATCH SERIALIZER (MATCHES MODEL)
     nazev_atributu_id = serializers.IntegerField()
-    # DOES NOT MATCH SERIALIZER (MATCHES MODEL)
     hodnota_atributu_id = serializers.IntegerField()
 
     # It might be appropriate to use validators in creates() and updates()
     def create(self, validated_data):
         create_params = {}
         if 'id' in validated_data.keys():
-            id = validated_data.get('id'),
+            id = validated_data.get('id')
             create_params['id'] = id
-        # Here we dont use _id because in Django it's an actual reference
-        # to the object, not just the id. So in the model i didn't use id
         if 'nazev_atributu_id' in validated_data.keys():
-            # DOES NOT MATCH SERIALIZER (MATCHES MODEL)
-            nazev_atributu = my_models['AttributeName'].objects.get(
-                pk=validated_data.get('nazev_atributu_id')),
-            create_params['nazev_atributu'] = nazev_atributu
+            create_params['nazev_atributu'] = \
+                my_models['AttributeName'].objects.get(
+                    pk=validated_data.get('nazev_atributu_id'))
         if 'hodnota_atributu_id' in validated_data.keys():
-            # DOES NOT MATCH SERIALIZER (MATCHES MODEL)
-            hodnota_atributu = my_models['AttributeValue'].objects.get(
-                pk=validated_data.get('hodnota_atributu_id'))
-            create_params['hodnota_atributu'] = hodnota_atributu
+            create_params['hodnota_atributu'] = \
+                my_models['AttributeValue'].objects.get(
+                    pk=validated_data.get('hodnota_atributu_id'))
         return my_models['Attribute'].objects.create(**create_params)
 
     def update(self, instance, validated_data):
@@ -97,27 +91,19 @@ class ProductSerializer(serializers.Serializer):
     def create(self, validated_data):
         create_params = {}
         if 'id' in validated_data.keys():
-            id = validated_data.get('id')
-            create_params['id'] = id
+            create_params['id'] = validated_data.get('id')
         if 'nazev' in validated_data.keys():
-            nazev = validated_data.get('nazev')
-            create_params['nazev'] = nazev
+            create_params['nazev'] = validated_data.get('nazev')
         if 'description' in validated_data.keys():
-            description = validated_data.get('description')
-            create_params['description'] = description
+            create_params['description'] = validated_data.get('description')
         if 'cena' in validated_data.keys():
-            cena = validated_data.get('cena')
-            create_params['cena'] = cena
+            create_params['cena'] = validated_data.get('cena')
         if 'mena' in validated_data.keys():
-            mena = validated_data.get('mena')
-            create_params['mena'] = mena
+            create_params['mena'] = validated_data.get('mena')
         if 'published_on' in validated_data.keys():
-            published_on = validated_data.get('published_on')
-            create_params['published_on'] = published_on
+            create_params['published_on'] = validated_data.get('published_on')
         if 'is_published' in validated_data.keys():
-            is_published = validated_data.get('is_published')
-            create_params['is_published'] = is_published
-        print(create_params)
+            create_params['is_published'] = validated_data.get('is_published')
         return my_models['Product'].objects.create(**create_params)
 
     def update(self, instance, validated_data):
@@ -193,21 +179,16 @@ class ProductImageSerializer(serializers.Serializer):
     def create(self, validated_data):
         create_params = {}
         if 'id' in validated_data.keys():
-            id = validated_data['id']
-            create_params['id'] = id
+            create_params['id'] = validated_data['id']
         if 'product' in validated_data.keys():
-            product = my_models['Product'].objects.get(
+            create_params['product'] = my_models['Product'].objects.get(
                 pk=validated_data['product'])
-            create_params['product'] = product
         if 'obrazek_id' in validated_data.keys():
-            # DOES NOT MATCH SERIALIZER (MATCHES MODEL)
             # is it here because we want to run it through serializer validation?
-            obrazek = my_models['Image'].objects.get(
+            create_params['obrazek'] = my_models['Image'].objects.get(
                 pk=validated_data['obrazek_id'])
-            create_params['obrazek'] = obrazek
         if 'nazev' in validated_data.keys():
-            nazev = validated_data['nazev']
-            create_params['nazev'] = nazev
+            create_params['nazev'] = validated_data['nazev']
         return my_models['ProductImage'].objects.create(**create_params)
 
     def update(self, instance, validated_data):
@@ -264,7 +245,6 @@ class CatalogSerializer(serializers.ModelSerializer):
 #    id = serializers.IntegerField()
 #
 #    def create(self, validated_data):
-#        print(validated_data)
 #        create_params = {}
 #        # create needs an id
 #        #if 'id' in validated_data.keys():
@@ -274,7 +254,6 @@ class CatalogSerializer(serializers.ModelSerializer):
 #            create_params['nazev'] = validated_data.get('nazev')
 #        if 'obrazek_id' in validated_data.keys():
 #            create_params['obrazek_id'] = validated_data.get('obrazek_id')
-#        print(validated_data['products_ids'])
 #        if 'products_ids' in validated_data.keys():
 #            create_params['products_ids'] = validated_data.get('products_ids')
 #        if 'attributes_ids' in validated_data.keys():
@@ -283,8 +262,6 @@ class CatalogSerializer(serializers.ModelSerializer):
 #        #    pk=validated_data.get('products_ids'))#products_ids spatne
 #        #create_params['attributes_ids'] = my_models['Attribute'].objects.get(
 #        #    pk=validated_data.get('attributes_ids'))
-#        print(create_params)
-#        print(**create_params)
 #        return my_models['Catalog'].objects.create(**create_params)
 #
 #    def update(self, instance, validated_data):
