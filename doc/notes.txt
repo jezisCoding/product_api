@@ -24,6 +24,7 @@ update/create vyskusat
 ked vymazem required validator v serializeri tak zostane v modeli? bude sa model nedat ulozit bez nazev_attr a hodnota_attr?
 validatory serializerov ktore som si sam nadefinoval -- prechadzaju nejake zle data v prislusnych objektoch?
 update/create: if not None tie veci (asi sa vyriesi samo ked opravim tie bugy)
+validatory do serializerov kde nepozuvame modelserializer - a spravit ich z modelu? mozno nerozumne
 
 
 Doing Testy:
