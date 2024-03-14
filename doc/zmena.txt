@@ -1,3 +1,4 @@
 readme.md: 
 	ked zmenim apina na api tak aj v howto
-
+docs/notes.txt
+	aj tu zmazat
