@@ -26,10 +26,7 @@ Make sure you have your virtual environment activated.\
 Then run:\
 `python manage.py runserver`
 
-There is test data in folder test that you can import and try things out with.
+Note: There is `test/test_data.json` file whose contents you can import and try things out with.
 
 ## Known bugs and my notes
-Listed in `notes.txt`
-
-## Test data
-Is in project root, named `test-data.json`
+Listed in `doc/notes.txt`
