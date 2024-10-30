@@ -16,7 +16,8 @@ db.sqlite3-journal
 *.swp
 
 # I dont want migrations
-apina/data_api/migrations
+# but I need them it seems
+#apina/data_api/migrations
 
 # Others
 .vscode/
