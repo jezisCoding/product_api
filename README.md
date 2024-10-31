@@ -26,7 +26,7 @@ Make sure you have your virtual environment activated.\
 Then run:\
 `python manage.py runserver`
 
-Note: There is `test/test_data.json` file whose contents you can import and try things out with.
+Note: There is `test/test_data.json` file whose contents you can import at `http://127.0.0.1:8000/import` and try things out.
 
 ## Known bugs and my notes
 Listed in `doc/notes.txt`
