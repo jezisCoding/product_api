@@ -9,7 +9,6 @@ Known bugs:
 My notes:
 Do i want a get that returns its friends via foreign key?
 How to make sure my database has no dead rows?
-I could also not keep django generated files in my source
 Tests
 
 import - update/create vyskusat
