@@ -21,4 +21,6 @@ db.sqlite3-journal
 
 # Others
 .vscode/
-test-zadani.txt
+log.html
+output.xml
+report.html
