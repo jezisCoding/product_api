@@ -26,7 +26,16 @@ Make sure you have your virtual environment activated.\
 Then run:\
 `python manage.py runserver`
 
-Note: There is `test/test_data.json` file whose contents you can import at `http://127.0.0.1:8000/import` and try things out.
+Note: There is `test/test_data.json` file whose contents you can import at `http://127.0.0.1:8000/import` and try things out, for example at http://127.0.0.1:8000/detail/AttributeName
+
+## How to Run Tests
+In `product_catalog_api/apina` folder:\
+Make sure you have your virtual environment activated.\
+`. ../venv/bin/activate`\
+Then run:\
+`robot data_api/testing/api_tests.robot`
+
+Note: Output files such as log and report will be in the folder you run the tests from.
 
 ## Known bugs and my notes
 Listed in `doc/notes.txt`
