@@ -1,9 +1,8 @@
 ## About
 Simple Django read/write only e-shop REST API.\
 Made as an assignment for a job interview.\
-Some names are in Czech.
-
-A database diagram and test data are also here.
+Original assignment is at `product_catalog_api/doc/zadani.txt`\
+The assignment and some names in the code are in Czech language.
 
 ## Started with this tutorial:
 https://blog.logrocket.com/django-rest-framework-create-api/#setting-up-django-rest-framework
