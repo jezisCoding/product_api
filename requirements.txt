@@ -1,6 +1,14 @@
 asgiref==3.6.0
+certifi==2024.8.30
+charset-normalizer==3.4.0
 Django==4.1.5
 djangorestframework==3.14.0
+idna==3.10
 pkg_resources==0.0.0
 pytz==2022.7
+requests==2.32.3
+robotframework==7.1.1
+robotframework-async-keyword==1.1.13
+robotframework-requests==0.9.7
 sqlparse==0.4.3
+urllib3==2.2.3
